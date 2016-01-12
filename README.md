@@ -2,7 +2,7 @@
 
 [![Dependency Status](https://david-dm.org/awaseem/RESTful-express-starter.svg)](https://david-dm.org/awaseem/RESTful-express-starter)  [![devDependency Status](https://david-dm.org/awaseem/RESTful-express-starter/dev-status.svg)](https://david-dm.org/awaseem/RESTful-express-starter#info=devDependencies)
 
-A simple RESTful API for a generic blog website.
+A simple starter for creating RESTful services with Express. Testing uses Mocha and supertest.
 
 ## Setup
 
