@@ -19,4 +19,15 @@ Test changes using:
 npm test
 ```
 
-#### Created for CPSC 471
+## Travis CI + Docker Hub Setup
+
+This starter also allows you to test, create and push Docker images automatically with Travis CI. Simply add the following environment variables to your Travis CI environment:
+
+```
+DOCKER_EMAIL = docker_user_email
+DOCKER_USERNAME = docker_user_username
+DOCKER_PASSWORD = docker_user_password
+DOCKER_HUB_URL = hub_username/hub_repo ( For example: awaseem/blog-api )
+```
+
+##### Created for CPSC 471

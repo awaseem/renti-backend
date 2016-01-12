@@ -19,9 +19,9 @@ before_install:
     - sleep 15
     - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 after_success:
-    - rm -rf mongodb-linux-x86_64-$MONGODB_VERSION.tgz mongodb-linux-x86_64-$MONGODB_VERSION data
+    - rm -rf mongodb-linux-x86_64-$MONGODB_VERSION.tgz mongodb-linux-x86_64-$MONGODB_VERSION
     - sleep 5
-    - docker build -t awaseem/blog-api:$TRAVIS_BRANCH-$TRAVIS_NODE_VERSION .
+    - docker build -t $DOCKER_HUB_URL:$TRAVIS_BRANCH-$TRAVIS_NODE_VERSION .
     - sleep 10
-    - docker push awaseem/blog-api:$TRAVIS_BRANCH-$TRAVIS_NODE_VERSION
+    - docker push $DOCKER_HUB_URL:$TRAVIS_BRANCH-$TRAVIS_NODE_VERSION
     - docker logout
