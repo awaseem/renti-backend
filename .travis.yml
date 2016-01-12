@@ -1,0 +1,27 @@
+# Please check issue for mongo and docker work around: https://github.com/travis-ci/travis-ci/issues/2125
+sudo: false
+language: node_js
+node_js:
+    - "5.0.0"
+    - "4.0.0"
+services:
+  - docker
+  - mongodb
+env:
+  global:
+    - MONGODB_VERSION=2.6.10
+before_install:
+    - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-$MONGODB_VERSION.tgz
+    - tar xfz mongodb-linux-x86_64-$MONGODB_VERSION.tgz
+    - export PATH=`pwd`/mongodb-linux-x86_64-$MONGODB_VERSION/bin:$PATH
+    - mkdir -p data/db
+    - mongod --quiet --dbpath=data/db &
+    - sleep 15
+    - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+after_success:
+    - rm -rf mongodb-linux-x86_64-$MONGODB_VERSION.tgz mongodb-linux-x86_64-$MONGODB_VERSION data
+    - sleep 5
+    - docker build -t awaseem/blog-api:$TRAVIS_BRANCH-$TRAVIS_NODE_VERSION .
+    - sleep 10
+    - docker push awaseem/blog-api:$TRAVIS_BRANCH-$TRAVIS_NODE_VERSION
+    - docker logout

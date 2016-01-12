@@ -1,0 +1,31 @@
+{
+  "name": "RESTful-express-starter",
+  "version": "1.0.0",
+  "description": "A simple RESTful API for a generic blog website",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awaseem/blog-api.git"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha --compilers js:babel-register --timeout 15000",
+    "dev": "./node_modules/nodemon/bin/nodemon.js app.js --exec ./node_modules/babel-cli/bin/babel-node.js --presets es2015",
+    "start": "node main.js"
+  },
+  "author": "Ali Waseem",
+  "license": "MIT",
+  "dependencies": {
+    "babel-preset-es2015": "^6.3.13",
+    "babel-register": "^6.3.13",
+    "body-parser": "^1.13.3",
+    "express": "^4.13.3",
+    "morgan": "^1.6.1",
+    "nconf": "^0.8.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.3.17",
+    "mocha": "^2.3.4",
+    "nodemon": "^1.8.1",
+    "supertest": "^1.1.0"
+  }
+}
