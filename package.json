@@ -8,8 +8,8 @@
     "url": "git://github.com/awaseem/RESTful-express-starter.git"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha --compilers js:babel-register --timeout 15000",
-    "dev": "./node_modules/nodemon/bin/nodemon.js app.js --exec ./node_modules/babel-cli/bin/babel-node.js --presets es2015",
+    "test": "mocha --compilers js:babel-register --timeout 15000",
+    "dev": "nodemon app.js --exec babel-node --presets es2015",
     "start": "node main.js"
   },
   "author": "Ali Waseem",
