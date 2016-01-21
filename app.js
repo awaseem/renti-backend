@@ -4,7 +4,6 @@
 
 import express from "express";
 import bodyparser from "body-parser";
-import morgan from "morgan";
 import config from "nconf";
 import expressConfig from "./config/express";
 import { router as helloApi } from "./api/hello";
@@ -44,7 +43,7 @@ app.all("*", (req, res) => {
     res.status(404).json( { message: "Error: Route does not exist!"} );
 });
 
-let server = app.listen(expressConfig.port, function () {
+app.listen(expressConfig.port, function () {
     console.log(`App Running on http://localhost:${expressConfig.port}`);
 });
 

@@ -15,12 +15,12 @@
         "semi": [
             2,
             "always"
-        ]
+        ],
+        "no-console": 0
     },
     "env": {
         "es6": true,
         "node": true,
-        "browser": true,
         "mocha": true
     },
     "extends": "eslint:recommended",
