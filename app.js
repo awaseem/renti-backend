@@ -9,7 +9,7 @@ import expressConfig from "./config/express";
 import { router as helloApi } from "./api/hello";
 import { allowCrossDomain } from "./middlewares/crossDomain";
 
-let app = express();
+const app = express();
 
 // Setup our config staging, check environment variables first then
 // look for a file

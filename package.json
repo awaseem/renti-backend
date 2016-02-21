@@ -18,9 +18,12 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-register": "^6.3.13",
     "body-parser": "^1.13.3",
+    "bookshelf": "^0.9.1",
     "express": "^4.13.3",
+    "knex": "^0.9.0",
     "morgan": "^1.6.1",
-    "nconf": "^0.8.2"
+    "nconf": "^0.8.2",
+    "sqlite3": "^3.1.1"
   },
   "devDependencies": {
     "babel-cli": "^6.3.17",
