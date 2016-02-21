@@ -34,8 +34,6 @@ imgur.es6
 playbox
 database.js
 imgur.js
-jwt.js
-config.json
 .DS_Store
 
 # Latex documentation ignores
