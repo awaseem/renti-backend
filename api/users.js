@@ -8,7 +8,7 @@ import auth from "../middlewares/auth";
 const router = express.Router();
 
 router.get("/", (req, res) => {
-    Users.fetchAll({ columns: ["uid", "first_name", "last_name", "address", "username", "email", "address"] })
+    Users.fetchAll({ columns: ["uid", "first_name", "last_name", "address", "username", "email", "address", "image"] })
         .then((allUsers) => {
             res.status(200).json(allUsers);
         })
@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-    Users.forge({ uid: req.params.id }).fetch({ columns: ["uid", "first_name", "last_name", "address", "username", "email", "address"] })
+    Users.forge({ uid: req.params.id }).fetch({ columns: ["uid", "first_name", "last_name", "address", "username", "email", "address", "image"] })
         .then((model) => {
             res.status(200).json(model);
         })
@@ -74,7 +74,8 @@ router.put("/", (req, res) => {
         .then((model) => {
             return model.save({
                 address: req.body.address || model.get("address"),
-                email: req.body.email || model.get("email")
+                email: req.body.email || model.get("email"),
+                image: req.body.image || model.get("image")
             }, { method: "update" });
         })
         .then((updatedModel) => {

@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
 
         knex.schema.createTable("users", function (table) {
             table.increments("uid").primary();
+            table.string("image");
             table.string("username");
             table.string("password");
             table.string("first_name");
@@ -16,6 +17,7 @@ exports.up = function(knex, Promise) {
 
         knex.schema.createTable("cars", function (table) {
             table.increments("cid").primary();
+            table.string("image");
             table.string("make");
             table.string("model");
             table.integer("year");

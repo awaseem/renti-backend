@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 const creationRules = {
     username: "required",
     password: "required",
+    image: "required",
     first_name: "required",
     last_name: "required",
     address: "required",
