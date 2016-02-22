@@ -11,7 +11,7 @@ router.get("/", (req, res, next) => {
     if (req.query.token) {
         return next();
     }
-    Users.fetchAll({ columns: ["uid", "first_name", "last_name", "address", "username", "email", "address", "image"] })
+    Users.fetchAll({ columns: ["uid", "first_name", "last_name", "address", "username", "email", "image"] })
         .then((allUsers) => {
             res.status(200).json(allUsers);
         })
@@ -24,7 +24,7 @@ router.get("/:id", (req, res, next) => {
     if (req.query.token) {
         return next();
     }
-    Users.forge({ uid: req.params.id }).fetch({ columns: ["uid", "first_name", "last_name", "address", "username", "email", "address", "image"] })
+    Users.forge({ uid: req.params.id }).fetch({ columns: ["uid", "first_name", "last_name", "address", "username", "email", "image"] })
         .then((model) => {
             res.status(200).json(model);
         })
@@ -79,7 +79,6 @@ router.post("/signin", (req, res) => {
 router.use(auth);
 
 router.get("/", (req, res) => {
-    console.log(req.user.uid);
     Users.forge({ uid: req.user.uid }).fetch({ withRelated: "creditCard" })
         .then((userInfo) => {
             res.status(200).json(userInfo);

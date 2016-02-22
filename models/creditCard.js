@@ -16,7 +16,7 @@ export default bookshelf.Model.extend({
     },
 
     initialize: function () {
-        this.on("creating", this.validateCreation, this.hashPassword);
+        this.on("creating", this.validateCreation);
     },
 
     validateCreation: function () {
