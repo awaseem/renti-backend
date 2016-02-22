@@ -3,8 +3,29 @@ import Users from "../models/users";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import jwtConfig from "../config/jwt";
+import auth from "../middlewares/auth";
 
 const router = express.Router();
+
+router.get("/", (req, res) => {
+    Users.fetchAll({ columns: ["uid", "first_name", "last_name", "address", "username", "email", "address"] })
+        .then((allUsers) => {
+            res.status(200).json(allUsers);
+        })
+        .catch((err) => {
+            res.status(400).json({ error: err });
+        });
+});
+
+router.get("/:id", (req, res) => {
+    Users.forge({ uid: req.params.id }).fetch({ columns: ["uid", "first_name", "last_name", "address", "username", "email", "address"] })
+        .then((model) => {
+            res.status(200).json(model);
+        })
+        .catch((err) => {
+            res.status(400).json({ error: err });
+        });
+});
 
 router.post("/signup", (req, res) => {
     Users.where({ username: req.body.username }).fetch()
@@ -38,6 +59,37 @@ router.post("/signin", (req, res) => {
             else {
                 throw "Failed to validate password!";
             }
+        })
+        .catch((err) => {
+            res.status(400).json({ error: err });
+        });
+});
+
+// Private routes
+
+router.use(auth);
+
+router.put("/", (req, res) => {
+    Users.forge({ uid: req.user.uid }).fetch()
+        .then((model) => {
+            return model.save({
+                address: req.body.address || model.get("address"),
+                email: req.body.email || model.get("email")
+            }, { method: "update" });
+        })
+        .then((updatedModel) => {
+            res.status(200).json({ message: "Updated user!", data: updatedModel });
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({ error: err });
+        });
+});
+
+router.delete("/", (req, res) => {
+    Users.forge({ uid: req.user.uid }).destroy()
+        .then((deletedModel) => {
+            res.status(200).json({ message: "Deleted user!", data: deletedModel});
         })
         .catch((err) => {
             res.status(400).json({ error: err });

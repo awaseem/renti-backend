@@ -2,7 +2,7 @@ import bookshelf from "../bookshelf";
 import checkIt from "checkit";
 import bcrypt from "bcrypt";
 
-const rules = {
+const creationRules = {
     username: "required",
     password: "required",
     first_name: "required",
@@ -15,13 +15,14 @@ const rules = {
 export default bookshelf.Model.extend({
     tableName: "users",
 
+    idAttribute: "uid",
+
     initialize: function () {
-        this.on("creating", this.hashPassword);
-        this.on("saving", this.validateSave);
+        this.on("creating", this.validateCreation, this.hashPassword);
     },
 
-    validateSave: function () {
-        return checkIt(rules).run(this.attributes);
+    validateCreation: function () {
+        return checkIt(creationRules).run(this.attributes);
     },
 
     hashPassword: function(model) {
