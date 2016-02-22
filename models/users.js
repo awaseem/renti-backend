@@ -1,6 +1,7 @@
 import bookshelf from "../bookshelf";
 import checkIt from "checkit";
 import bcrypt from "bcrypt";
+import CreditCard from "./creditCard";
 
 const creationRules = {
     username: "required",
@@ -18,8 +19,13 @@ export default bookshelf.Model.extend({
 
     idAttribute: "uid",
 
+    creditCard: function () {
+        return this.hasOne(CreditCard);
+    },
+
     initialize: function () {
-        this.on("creating", this.validateCreation, this.hashPassword);
+        this.on("creating", this.validateCreation);
+        this.on("creating", this.hashPassword);
     },
 
     validateCreation: function () {

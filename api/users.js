@@ -44,9 +44,12 @@ router.post("/signup", (req, res) => {
 router.post("/signin", (req, res) => {
     Users.where({ username: req.body.username }).fetch()
         .then((model) => {
+            if (!model) {
+                throw "No user found!";
+            }
             if (bcrypt.compareSync(req.body.password, model.get("password"))) {
                 const accessToken = jwt.sign({
-                    userId: model.get("uid"),
+                    uid: model.get("uid"),
                     first_name: model.get("first_name"),
                     last_name: model.get("last_name"),
                     address: model.get("address"),
