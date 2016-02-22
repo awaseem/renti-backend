@@ -8,6 +8,7 @@ import config from "nconf";
 import expressConfig from "./config/express";
 import { router as helloApi } from "./api/hello";
 import { router as userApi } from "./api/users";
+import { router as creditCardApi } from "./api/creditCard";
 import { allowCrossDomain } from "./middlewares/crossDomain";
 
 const app = express();
@@ -39,6 +40,7 @@ else {
 // Setup all of our API routes
 app.use("/api/hello", helloApi);
 app.use("/api/user", userApi);
+app.use("/api/creditcard", creditCardApi);
 
 // Catch any other routes and send a 404
 app.all("*", (req, res) => {

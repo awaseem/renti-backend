@@ -20,7 +20,7 @@ export default bookshelf.Model.extend({
     idAttribute: "uid",
 
     creditCard: function () {
-        return this.hasOne(CreditCard);
+        return this.hasOne(CreditCard, "user_id");
     },
 
     initialize: function () {

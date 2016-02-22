@@ -34,7 +34,8 @@ exports.up = function(knex, Promise) {
             table.integer("user_id")
                 .references("uid")
                 .inTable("users")
-                .unique();
+                .unique()
+                .notNullable();
         }),
 
         knex.schema.createTable("transactions", function(table) {
@@ -45,10 +46,12 @@ exports.up = function(knex, Promise) {
             table.binary("pending");
             table.integer("user_renter")
                 .references("uuid")
-                .inTable("users");
+                .inTable("users")
+                .notNullable();
             table.integer("car_id")
                 .references("cid")
-                .inTable("cars");
+                .inTable("cars")
+                .notNullable();
         }),
 
         knex.schema.createTable("feedback_users", function (table) {
@@ -57,10 +60,12 @@ exports.up = function(knex, Promise) {
             table.integer("rating");
             table.integer("user_creator")
                 .references("uuid")
-                .inTable("users");
+                .inTable("users")
+                .notNullable();
             table.integer("user_has")
                 .references("uuid")
-                .inTable("users");
+                .inTable("users")
+                .notNullable();
         }),
 
         knex.schema.createTable("feedback_cars", function (table) {
@@ -69,10 +74,12 @@ exports.up = function(knex, Promise) {
             table.integer("rating");
             table.integer("user_creator")
                 .references("uuid")
-                .inTable("users");
+                .inTable("users")
+                .notNullable();
             table.integer("car_has")
                 .references("uuid")
-                .inTable("users");
+                .inTable("users")
+                .notNullable();
         })
     ]);
 

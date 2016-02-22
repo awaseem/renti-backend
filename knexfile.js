@@ -6,6 +6,11 @@ module.exports = {
         client: "sqlite3",
         connection: {
             filename: "./dev.sqlite3"
+        },
+        pool: {
+            afterCreate: function (conn, cb) {
+                conn.run("PRAGMA foreign_keys = ON", cb);
+            }
         }
     },
 
@@ -13,6 +18,11 @@ module.exports = {
         client: "sqlite3",
         connection: {
             filename: "./dev.sqlite3"
+        },
+        pool: {
+            afterCreate: function (conn, cb) {
+                conn.run("PRAGMA foreign_keys = ON", cb);
+            }
         }
     },
 
@@ -20,6 +30,11 @@ module.exports = {
         client: "sqlite3",
         connection: {
             filename: "./dev.sqlite3"
+        },
+        pool: {
+            afterCreate: function (conn, cb) {
+                conn.run("PRAGMA foreign_keys = ON", cb);
+            }
         }
     }
 
