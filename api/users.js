@@ -7,7 +7,10 @@ import auth from "../middlewares/auth";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.get("/", (req, res, next) => {
+    if (req.query.token) {
+        return next();
+    }
     Users.fetchAll({ columns: ["uid", "first_name", "last_name", "address", "username", "email", "address", "image"] })
         .then((allUsers) => {
             res.status(200).json(allUsers);
@@ -17,7 +20,10 @@ router.get("/", (req, res) => {
         });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", (req, res, next) => {
+    if (req.query.token) {
+        return next();
+    }
     Users.forge({ uid: req.params.id }).fetch({ columns: ["uid", "first_name", "last_name", "address", "username", "email", "address", "image"] })
         .then((model) => {
             res.status(200).json(model);
@@ -72,6 +78,17 @@ router.post("/signin", (req, res) => {
 
 router.use(auth);
 
+router.get("/", (req, res) => {
+    console.log(req.user.uid);
+    Users.forge({ uid: req.user.uid }).fetch({ withRelated: "creditCard" })
+        .then((userInfo) => {
+            res.status(200).json(userInfo);
+        })
+        .catch((err) => {
+            res.status(400).json({ error: err });
+        });
+});
+
 router.put("/", (req, res) => {
     Users.forge({ uid: req.user.uid }).fetch()
         .then((model) => {
@@ -85,7 +102,6 @@ router.put("/", (req, res) => {
             res.status(200).json({ message: "Updated user!", data: updatedModel });
         })
         .catch((err) => {
-            console.log(err);
             res.status(400).json({ error: err });
         });
 });

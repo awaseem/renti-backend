@@ -24,7 +24,8 @@ exports.up = function(knex, Promise) {
             table.integer("number_of_seats");
             table.integer("user_id")
                 .references("uid")
-                .inTable("users");
+                .inTable("users")
+                .onDelete("CASCADE");
         }),
 
         knex.schema.createTable("credit_card", function (table) {
@@ -34,6 +35,7 @@ exports.up = function(knex, Promise) {
             table.integer("user_id")
                 .references("uid")
                 .inTable("users")
+                .onDelete("CASCADE")
                 .unique()
                 .notNullable();
         }),
@@ -45,12 +47,14 @@ exports.up = function(knex, Promise) {
             table.decimal("price");
             table.binary("pending");
             table.integer("user_renter")
-                .references("uuid")
+                .references("uid")
                 .inTable("users")
+                .onDelete("CASCADE")
                 .notNullable();
             table.integer("car_id")
                 .references("cid")
                 .inTable("cars")
+                .onDelete("CASCADE")
                 .notNullable();
         }),
 
@@ -59,12 +63,14 @@ exports.up = function(knex, Promise) {
             table.text("comment");
             table.integer("rating");
             table.integer("user_creator")
-                .references("uuid")
+                .references("uid")
                 .inTable("users")
+                .onDelete("CASCADE")
                 .notNullable();
             table.integer("user_has")
-                .references("uuid")
+                .references("uid")
                 .inTable("users")
+                .onDelete("CASCADE")
                 .notNullable();
         }),
 
@@ -73,12 +79,14 @@ exports.up = function(knex, Promise) {
             table.text("comment");
             table.integer("rating");
             table.integer("user_creator")
-                .references("uuid")
+                .references("uid")
                 .inTable("users")
+                .onDelete("CASCADE")
                 .notNullable();
             table.integer("car_has")
-                .references("uuid")
+                .references("uid")
                 .inTable("users")
+                .onDelete("CASCADE")
                 .notNullable();
         })
     ]);

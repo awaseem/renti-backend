@@ -27,7 +27,6 @@ router.delete("/", (req, res) => {
             res.status(200).json({ message: "Deleted credit card!"});
         })
         .catch((err) => {
-            console.log(err);
             res.status(400).json({ error: err });
         });
 });
