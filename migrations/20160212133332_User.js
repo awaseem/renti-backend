@@ -16,7 +16,8 @@ exports.up = function(knex, Promise) {
         }),
 
         knex.schema.createTable("cars", function (table) {
-            table.increments("cid").primary();
+            table.string("license_plate").primary();
+            table.string("colour");
             table.string("image");
             table.string("make");
             table.string("model");
@@ -51,8 +52,8 @@ exports.up = function(knex, Promise) {
                 .inTable("users")
                 .onDelete("CASCADE")
                 .notNullable();
-            table.integer("car_id")
-                .references("cid")
+            table.string("car_id")
+                .references("license_plate")
                 .inTable("cars")
                 .onDelete("CASCADE")
                 .notNullable();

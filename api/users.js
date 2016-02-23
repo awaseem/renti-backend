@@ -7,9 +7,9 @@ import auth from "../middlewares/auth";
 
 const router = express.Router();
 
-const userPublicFetch = {
+export const userPublicFetch = {
     columns: ["uid", "first_name", "last_name", "address", "username", "email", "image"],
-    withRelated: "userFeedback"
+    withRelated: ["userFeedback", "cars"]
 };
 
 router.get("/", (req, res, next) => {
@@ -84,7 +84,7 @@ router.post("/signin", (req, res) => {
 router.use(auth);
 
 router.get("/", (req, res) => {
-    Users.forge({ uid: req.user.uid }).fetch({ withRelated: ["creditCard", "userFeedback"] })
+    Users.forge({ uid: req.user.uid }).fetch({ withRelated: userPublicFetch.withRelated.concat(["creditCard"]) })
         .then((userInfo) => {
             res.status(200).json(userInfo);
         })
