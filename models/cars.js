@@ -6,6 +6,7 @@ const creationRules = {
     license_plate: "required",
     model: "required",
     make: "required",
+    summary: "required",
     year: ["required", "numeric", "maxLength:4"],
     number_of_seats: ["required", "numeric"],
     colour: "required",
@@ -13,6 +14,10 @@ const creationRules = {
 };
 
 const deletionRules = {
+    license_plate: "required"
+};
+
+const updatingRules = {
     license_plate: "required"
 };
 
@@ -28,6 +33,7 @@ export default bookshelf.Model.extend({
     initialize: function () {
         this.on("creating", this.validateCreation);
         this.on("destroying", this.validateDeletion);
+        this.on("updating", this.validateUpdate);
     },
 
     validateCreation: function () {
@@ -36,5 +42,9 @@ export default bookshelf.Model.extend({
 
     validateDeletion: function () {
         return checkIt(deletionRules).run(this.attributes);
+    },
+
+    validateUpdate: function () {
+        return checkIt(updatingRules).run(this.attributes);
     }
 });

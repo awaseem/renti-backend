@@ -12,6 +12,7 @@ const creationRules = {
     first_name: "required",
     last_name: "required",
     address: "required",
+    summary: "required",
     date_of_birth: ["required"],
     email: ["required", "email"]
 };

@@ -8,7 +8,7 @@ import auth from "../middlewares/auth";
 const router = express.Router();
 
 export const userPublicFetch = {
-    columns: ["uid", "first_name", "last_name", "address", "username", "email", "image"],
+    columns: ["uid", "first_name", "last_name", "address", "username", "email", "image", "summary"],
     withRelated: ["userFeedback", "cars"]
 };
 
@@ -96,10 +96,12 @@ router.get("/", (req, res) => {
 router.put("/", (req, res) => {
     Users.forge({ uid: req.user.uid }).fetch()
         .then((model) => {
+            if (!model) throw "User you are trying to update does not exist!";
             return model.save({
                 address: req.body.address || model.get("address"),
                 email: req.body.email || model.get("email"),
-                image: req.body.image || model.get("image")
+                image: req.body.image || model.get("image"),
+                summary: req.body.summary || model.get("summary")
             }, { method: "update" });
         })
         .then((updatedModel) => {
@@ -112,8 +114,8 @@ router.put("/", (req, res) => {
 
 router.delete("/", (req, res) => {
     Users.forge({ uid: req.user.uid }).destroy()
-        .then((deletedModel) => {
-            res.status(200).json({ message: "Deleted user!", data: deletedModel});
+        .then(() => {
+            res.status(200).json({ message: "Deleted user!"});
         })
         .catch((err) => {
             res.status(400).json({ error: err });

@@ -11,6 +11,7 @@ exports.up = function(knex, Promise) {
             table.string("first_name");
             table.string("last_name");
             table.string("address");
+            table.string("summary");
             table.date("date_of_birth");
             table.string("email");
         }),
@@ -21,6 +22,7 @@ exports.up = function(knex, Promise) {
             table.string("image");
             table.string("make");
             table.string("model");
+            table.string("summary");
             table.integer("year");
             table.integer("number_of_seats");
             table.integer("user_id")
