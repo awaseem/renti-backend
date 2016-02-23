@@ -7,11 +7,16 @@ import auth from "../middlewares/auth";
 
 const router = express.Router();
 
+const userPublicFetch = {
+    columns: ["uid", "first_name", "last_name", "address", "username", "email", "image"],
+    withRelated: "userFeedback"
+};
+
 router.get("/", (req, res, next) => {
     if (req.query.token) {
         return next();
     }
-    Users.fetchAll({ columns: ["uid", "first_name", "last_name", "address", "username", "email", "image"] })
+    Users.fetchAll(userPublicFetch)
         .then((allUsers) => {
             res.status(200).json(allUsers);
         })
@@ -24,7 +29,7 @@ router.get("/:id", (req, res, next) => {
     if (req.query.token) {
         return next();
     }
-    Users.forge({ uid: req.params.id }).fetch({ columns: ["uid", "first_name", "last_name", "address", "username", "email", "image"] })
+    Users.forge({ uid: req.params.id }).fetch(userPublicFetch)
         .then((model) => {
             res.status(200).json(model);
         })
@@ -79,7 +84,7 @@ router.post("/signin", (req, res) => {
 router.use(auth);
 
 router.get("/", (req, res) => {
-    Users.forge({ uid: req.user.uid }).fetch({ withRelated: "creditCard" })
+    Users.forge({ uid: req.user.uid }).fetch({ withRelated: ["creditCard", "userFeedback"] })
         .then((userInfo) => {
             res.status(200).json(userInfo);
         })

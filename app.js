@@ -9,6 +9,7 @@ import expressConfig from "./config/express";
 import { router as helloApi } from "./api/hello";
 import { router as userApi } from "./api/users";
 import { router as creditCardApi } from "./api/creditCard";
+import { router as userFeedbackApi } from "./api/userFeedback";
 import { allowCrossDomain } from "./middlewares/crossDomain";
 
 const app = express();
@@ -41,6 +42,7 @@ else {
 app.use("/api/hello", helloApi);
 app.use("/api/user", userApi);
 app.use("/api/creditcard", creditCardApi);
+app.use("/api/userFeedback", userFeedbackApi);
 
 // Catch any other routes and send a 404
 app.all("*", (req, res) => {

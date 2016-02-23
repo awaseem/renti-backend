@@ -4,6 +4,8 @@ import auth from "../middlewares/auth";
 
 const router = express.Router();
 
+// Private route
+
 router.use(auth);
 
 router.post("/", (req, res) => {

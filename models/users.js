@@ -2,6 +2,7 @@ import bookshelf from "../bookshelf";
 import checkIt from "checkit";
 import bcrypt from "bcrypt";
 import CreditCard from "./creditCard";
+import UserFeedback from "./userFeedback";
 
 const creationRules = {
     username: "required",
@@ -18,6 +19,10 @@ export default bookshelf.Model.extend({
     tableName: "users",
 
     idAttribute: "uid",
+
+    userFeedback: function () {
+        return this.hasMany(UserFeedback, "user_has");
+    },
 
     creditCard: function () {
         return this.hasOne(CreditCard, "user_id");
