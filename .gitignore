@@ -37,3 +37,9 @@ imgur.js
 jwt.js
 config.json
 .DS_Store
+
+# Latex documentation ignores
+*.aux
+*.log
+*.out
+*.toc
