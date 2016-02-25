@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.use(auth);
 
-router.post("/", (req, res) => {
+router.post("/", (req, res, next) => {
     CreditCard.forge({
         user_id: req.user.uid,
         credit_card_number: req.body.credit_card_number,
@@ -18,19 +18,15 @@ router.post("/", (req, res) => {
         .then((newCard) => {
             res.status(200).json({ message: "Added credit card to user!", data: newCard });
         })
-        .catch((err) => {
-            res.status(400).json({ error: err });
-        });
+        .catch(next);
 });
 
-router.delete("/", (req, res) => {
+router.delete("/", (req, res, next) => {
     CreditCard.where({ user_id: req.user.uid }).destroy()
         .then(() => {
             res.status(200).json({ message: "Deleted credit card!"});
         })
-        .catch((err) => {
-            res.status(400).json({ error: err });
-        });
+        .catch(next);
 });
 
 export { router };

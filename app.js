@@ -13,6 +13,7 @@ import { router as userFeedbackApi } from "./api/userFeedback";
 import { router as carsApi } from "./api/cars";
 import { router as carFeedbackApi} from "./api/carFeedback";
 import { allowCrossDomain } from "./middlewares/crossDomain";
+import errorHandler from "./middlewares/errorHandler";
 
 const app = express();
 
@@ -52,6 +53,8 @@ app.use("/api/car", carsApi);
 app.all("*", (req, res) => {
     res.status(404).json( { message: "Error: Route does not exist!"} );
 });
+
+app.use(errorHandler);
 
 app.listen(expressConfig.port, function () {
     console.log(`App Running on http://localhost:${expressConfig.port}`);

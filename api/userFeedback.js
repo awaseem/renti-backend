@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.use(auth);
 
-router.post("/", (req, res) => {
+router.post("/", (req, res, next) => {
     UserFeedback.forge({
         comment: req.body.comment,
         rating: req.body.rating,
@@ -21,12 +21,10 @@ router.post("/", (req, res) => {
                 data: newUserFeedback
             });
         })
-        .catch((err) => {
-            res.status(400).json({ error: err });
-        });
+        .catch(next);
 });
 
-router.delete("/", (req, res) => {
+router.delete("/", (req, res, next) => {
     UserFeedback.forge({ fid: req.body.fid }).fetch()
         .then((userFeedbackModel) => {
             if(!userFeedbackModel) throw "Cannot find user feed back with the id given!";
@@ -34,11 +32,7 @@ router.delete("/", (req, res) => {
             return userFeedbackModel.destroy();
         })
         .then(() => res.status(200).json({ message: "Deleted comment!" }))
-        .catch((err) => {
-            res.status(200).json({
-                err: err
-            });
-        });
+        .catch(next);
 });
 
 export { router };

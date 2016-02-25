@@ -5,7 +5,7 @@ import { userPublicFetch } from "./users";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.get("/", (req, res, next) => {
     Cars.fetchAll({ withRelated: [
         "carFeedback",
         { users: (query) => query.columns(...userPublicFetch.columns) }
@@ -13,14 +13,10 @@ router.get("/", (req, res) => {
         .then((allCars) => {
             res.status(200).json(allCars);
         })
-        .catch((err) => {
-            res.status(400).json({
-                error: err
-            });
-        });
+        .catch(next);
 });
 
-router.get("/:plate", (req, res) => {
+router.get("/:plate", (req, res, next) => {
     Cars.forge({ license_plate: req.params.plate }).fetch({
         withRelated: [
             "carFeedback",
@@ -31,18 +27,14 @@ router.get("/:plate", (req, res) => {
             if (!car) throw `No car found with the following plate: ${req.params.plate}`;
             res.status(200).json(car);
         })
-        .catch((err) => {
-            res.status(400).json({
-                error: err
-            });
-        });
+        .catch(next);
 });
 
 // Private routes
 
 router.use(auth);
 
-router.post("/", (req, res) => {
+router.post("/", (req, res, next) => {
     Cars.forge({
         license_plate: req.body.license_plate,
         model: req.body.model,
@@ -60,14 +52,10 @@ router.post("/", (req, res) => {
                 data: newCar
             });
         })
-        .catch((err) => {
-            res.status(400).json({
-                error: err
-            });
-        });
+        .catch(next);
 });
 
-router.put("/", (req, res) => {
+router.put("/", (req, res, next) => {
     Cars.forge({ license_plate: req.body.license_plate }).fetch()
         .then((carModel) => {
             if (!carModel) throw "Car you are trying to update does not exist";
@@ -88,14 +76,10 @@ router.put("/", (req, res) => {
                 data: updatedCarModel
             });
         })
-        .catch((err) => {
-            res.status(400).json({
-                error: err
-            });
-        });
+        .catch(next);
 });
 
-router.delete("/", (req, res) => {
+router.delete("/", (req, res, next) => {
     Cars.forge({ license_plate: req.body.license_plate }).fetch()
         .then((carToDelete) => {
             if (!carToDelete) throw "Car to delete does not exist";
@@ -103,11 +87,7 @@ router.delete("/", (req, res) => {
             return carToDelete.destroy();
         })
         .then(() => res.status(200).json({ message: "car destroyed!" }))
-        .catch((err) => {
-            res.status(400).json({
-                error: err
-            });
-        });
+        .catch(next);
 });
 
 export { router };

@@ -20,9 +20,7 @@ router.get("/", (req, res, next) => {
         .then((allUsers) => {
             res.status(200).json(allUsers);
         })
-        .catch((err) => {
-            res.status(400).json({ error: err });
-        });
+        .catch(next);
 });
 
 router.get("/:id", (req, res, next) => {
@@ -31,14 +29,13 @@ router.get("/:id", (req, res, next) => {
     }
     Users.forge({ uid: req.params.id }).fetch(userPublicFetch)
         .then((model) => {
+            if (!model) throw "User does not exist!";
             res.status(200).json(model);
         })
-        .catch((err) => {
-            res.status(400).json({ error: err });
-        });
+        .catch(next);
 });
 
-router.post("/signup", (req, res) => {
+router.post("/signup", (req, res, next) => {
     Users.where({ username: req.body.username }).fetch()
         .then((model) => {
             if (model) throw "Username already exists!";
@@ -47,12 +44,10 @@ router.post("/signup", (req, res) => {
         .then((newUser) => {
             res.status(200).json({ message: `Successfully created user: ${newUser.toJSON().username}` });
         })
-        .catch((err) => {
-            res.status(400).json({ error: err });
-        });
+        .catch(next);
 });
 
-router.post("/signin", (req, res) => {
+router.post("/signin", (req, res, next) => {
     Users.where({ username: req.body.username }).fetch()
         .then((model) => {
             if (!model) {
@@ -74,26 +69,22 @@ router.post("/signin", (req, res) => {
                 throw "Failed to validate password!";
             }
         })
-        .catch((err) => {
-            res.status(400).json({ error: err });
-        });
+        .catch(next);
 });
 
 // Private routes
 
 router.use(auth);
 
-router.get("/", (req, res) => {
+router.get("/", (req, res, next) => {
     Users.forge({ uid: req.user.uid }).fetch({ withRelated: userPublicFetch.withRelated.concat(["creditCard"]) })
         .then((userInfo) => {
             res.status(200).json(userInfo);
         })
-        .catch((err) => {
-            res.status(400).json({ error: err });
-        });
+        .catch(next);
 });
 
-router.put("/", (req, res) => {
+router.put("/", (req, res, next) => {
     Users.forge({ uid: req.user.uid }).fetch()
         .then((model) => {
             if (!model) throw "User you are trying to update does not exist!";
@@ -107,19 +98,15 @@ router.put("/", (req, res) => {
         .then((updatedModel) => {
             res.status(200).json({ message: "Updated user!", data: updatedModel });
         })
-        .catch((err) => {
-            res.status(400).json({ error: err });
-        });
+        .catch(next);
 });
 
-router.delete("/", (req, res) => {
+router.delete("/", (req, res, next) => {
     Users.forge({ uid: req.user.uid }).destroy()
         .then(() => {
             res.status(200).json({ message: "Deleted user!"});
         })
-        .catch((err) => {
-            res.status(400).json({ error: err });
-        });
+        .catch(next);
 });
 
 export { router };
