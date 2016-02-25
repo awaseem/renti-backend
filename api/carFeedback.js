@@ -1,6 +1,6 @@
 import express from "express";
 import auth from "../middlewares/auth";
-import UserFeedback from "../models/userFeedback";
+import CarFeedback from "../models/carFeedback";
 
 const router = express.Router();
 
@@ -9,16 +9,16 @@ const router = express.Router();
 router.use(auth);
 
 router.post("/", (req, res) => {
-    UserFeedback.forge({
+    CarFeedback.forge({
         comment: req.body.comment,
         rating: req.body.rating,
-        user_has: req.body.user_has,
+        car_has: req.body.car_has,
         user_creator: req.user.uid
     }).save()
-        .then((newUserFeedback) => {
+        .then((newCarFeedback) => {
             res.status(200).json({
-                message: "Created user feedback!",
-                data: newUserFeedback
+                message: "Created car feedback!",
+                data: newCarFeedback
             });
         })
         .catch((err) => {
@@ -27,16 +27,16 @@ router.post("/", (req, res) => {
 });
 
 router.delete("/", (req, res) => {
-    UserFeedback.forge({ fid: req.body.fid }).fetch()
-        .then((userFeedbackModel) => {
-            if(!userFeedbackModel) throw "Cannot find user feed back with the id given!";
-            if(userFeedbackModel.get("user_creator") !== req.user.uid) throw "You are not authorized to delete this user feedback!";
-            return userFeedbackModel.destroy();
+    CarFeedback.forge({ fid: req.body.fid }).fetch()
+        .then((carFeedbackModel) => {
+            if(!carFeedbackModel) throw "Cannot find car feed back with the id given!";
+            if(carFeedbackModel.get("user_creator") !== req.user.uid) throw "You are not authorized to delete this car feedback!";
+            return carFeedbackModel.destroy();
         })
         .then(() => res.status(200).json({ message: "Deleted comment!" }))
         .catch((err) => {
             res.status(200).json({
-                err: err
+                error: err
             });
         });
 });

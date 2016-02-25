@@ -6,11 +6,10 @@ import { userPublicFetch } from "./users";
 const router = express.Router();
 
 router.get("/", (req, res) => {
-    Cars.fetchAll({ withRelated: {
-        users: (query) => {
-            query.columns(...userPublicFetch.columns);
-        }
-    }})
+    Cars.fetchAll({ withRelated: [
+        "carFeedback",
+        { users: (query) => query.columns(...userPublicFetch.columns) }
+    ]})
         .then((allCars) => {
             res.status(200).json(allCars);
         })
@@ -23,11 +22,10 @@ router.get("/", (req, res) => {
 
 router.get("/:plate", (req, res) => {
     Cars.forge({ license_plate: req.params.plate }).fetch({
-        withRelated: {
-            users: (query) => {
-                query.columns(...userPublicFetch.columns);
-            }
-        }
+        withRelated: [
+            "carFeedback",
+            { users: (query) => query.columns(...userPublicFetch.columns) }
+        ]
     })
         .then((car) => {
             if (!car) throw `No car found with the following plate: ${req.params.plate}`;

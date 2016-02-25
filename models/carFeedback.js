@@ -1,11 +1,11 @@
 import bookshelf from "../bookshelf";
 import checkIt from "checkit";
-import Users from "./users";
+import Cars from "./cars";
 
 const creationRules = {
     comment: "required",
     rating: ["required", "greaterThan:0", "lessThanEqualTo:5", "numeric"],
-    user_has: ["required", "numeric"]
+    car_has: "required"
 };
 
 const deletionRules = {
@@ -13,12 +13,12 @@ const deletionRules = {
 };
 
 export default bookshelf.Model.extend({
-    tableName: "feedback_users",
+    tableName: "feedback_cars",
 
     idAttribute: "fid",
 
-    users: function () {
-        return this.belongsTo(Users, "user_has");
+    cars: function () {
+        return this.belongsTo(Cars, "car_has");
     },
 
     initialize: function () {

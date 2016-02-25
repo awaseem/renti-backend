@@ -87,8 +87,8 @@ exports.up = function(knex, Promise) {
                 .onDelete("CASCADE")
                 .notNullable();
             table.integer("car_has")
-                .references("uid")
-                .inTable("users")
+                .references("license_plate")
+                .inTable("cars")
                 .onDelete("CASCADE")
                 .notNullable();
         })

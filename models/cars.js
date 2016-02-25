@@ -1,6 +1,7 @@
 import bookshelf from "../bookshelf";
 import checkIt from "checkit";
 import Users from "./users";
+import CarFeedback from "./carFeedback";
 
 const creationRules = {
     license_plate: "required",
@@ -28,6 +29,10 @@ export default bookshelf.Model.extend({
 
     users: function () {
         return this.belongsTo(Users, "user_id");
+    },
+
+    carFeedback: function () {
+        return this.hasMany(CarFeedback, "car_has");
     },
 
     initialize: function () {
