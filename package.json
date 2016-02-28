@@ -10,7 +10,9 @@
   "scripts": {
     "test": "mocha --compilers js:babel-register --timeout 15000",
     "dev": "nodemon app.js --exec babel-node --presets es2015",
-    "start": "node main.js"
+    "start": "node main.js",
+    "rebuild": "rm dev.sqlite3 && knex migrate:latest && knex seed:run",
+    "postinstall": "knex migrate:latest && knex seed:run" 
   },
   "author": "Ali Waseem",
   "license": "MIT",

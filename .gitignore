@@ -35,6 +35,7 @@ playbox
 database.js
 imgur.js
 .DS_Store
+dev.sqlite3
 
 # Latex documentation ignores
 *.aux
