@@ -12,6 +12,7 @@ import creditCardApi from "./api/creditCard";
 import userFeedbackApi from "./api/userFeedback";
 import carsApi from "./api/cars";
 import carFeedbackApi from "./api/carFeedback";
+import transactionsApi from "./api/transactions";
 import { allowCrossDomain } from "./middlewares/crossDomain";
 import errorHandler from "./middlewares/errorHandler";
 
@@ -48,6 +49,7 @@ app.use("/api/creditcard", creditCardApi);
 app.use("/api/userfeedback", userFeedbackApi);
 app.use("/api/carfeedback", carFeedbackApi);
 app.use("/api/car", carsApi);
+app.use("/api/transactions", transactionsApi);
 
 // Catch any other routes and send a 404
 app.all("*", (req, res) => {

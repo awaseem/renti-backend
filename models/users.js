@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import CreditCard from "./creditCard";
 import UserFeedback from "./userFeedback";
 import Cars from "./cars";
+import transactions from "./transactions";
 
 const creationRules = {
     username: "required",
@@ -32,6 +33,10 @@ export default bookshelf.Model.extend({
 
     creditCard: function () {
         return this.hasOne(CreditCard, "user_id");
+    },
+
+    transactions: function () {
+        return this.hasMany(transactions, "user_renter");
     },
 
     initialize: function () {
