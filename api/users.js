@@ -9,7 +9,7 @@ const router = express.Router();
 
 export const userPublicFetch = {
     columns: ["uid", "first_name", "last_name", "address", "username", "email", "image", "summary"],
-    withRelated: ["userFeedback", "cars"]
+    withRelated: ["userFeedback", "cars", "cars.carFeedback"]
 };
 
 router.get("/", (req, res, next) => {
@@ -109,4 +109,4 @@ router.delete("/", (req, res, next) => {
         .catch(next);
 });
 
-export { router };
+export default router;

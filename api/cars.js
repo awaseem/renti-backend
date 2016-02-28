@@ -3,13 +3,18 @@ import Cars from "../models/cars";
 import auth from "../middlewares/auth";
 import { userPublicFetch } from "./users";
 
+const carPublicFetch = {
+    withRelated: [
+        "carFeedback",
+        "users.userFeedback",
+        { users: (query) => query.columns(...userPublicFetch.columns) }
+    ]
+};
+
 const router = express.Router();
 
 router.get("/", (req, res, next) => {
-    Cars.fetchAll({ withRelated: [
-        "carFeedback",
-        { users: (query) => query.columns(...userPublicFetch.columns) }
-    ]})
+    Cars.fetchAll(carPublicFetch)
         .then((allCars) => {
             res.status(200).json(allCars);
         })
@@ -17,12 +22,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/:plate", (req, res, next) => {
-    Cars.forge({ license_plate: req.params.plate }).fetch({
-        withRelated: [
-            "carFeedback",
-            { users: (query) => query.columns(...userPublicFetch.columns) }
-        ]
-    })
+    Cars.forge({ license_plate: req.params.plate }).fetch(carPublicFetch)
         .then((car) => {
             if (!car) throw `No car found with the following plate: ${req.params.plate}`;
             res.status(200).json(car);
@@ -90,4 +90,4 @@ router.delete("/", (req, res, next) => {
         .catch(next);
 });
 
-export { router };
+export default router;

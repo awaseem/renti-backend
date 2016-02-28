@@ -35,4 +35,4 @@ router.delete("/", (req, res, next) => {
         .catch(next);
 });
 
-export { router };
+export default router;

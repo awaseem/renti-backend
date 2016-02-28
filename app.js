@@ -6,12 +6,12 @@ import express from "express";
 import bodyparser from "body-parser";
 import config from "nconf";
 import expressConfig from "./config/express";
-import { router as helloApi } from "./api/hello";
-import { router as userApi } from "./api/users";
-import { router as creditCardApi } from "./api/creditCard";
-import { router as userFeedbackApi } from "./api/userFeedback";
-import { router as carsApi } from "./api/cars";
-import { router as carFeedbackApi} from "./api/carFeedback";
+import helloApi from "./api/hello";
+import userApi from "./api/users";
+import creditCardApi from "./api/creditCard";
+import userFeedbackApi from "./api/userFeedback";
+import carsApi from "./api/cars";
+import carFeedbackApi from "./api/carFeedback";
 import { allowCrossDomain } from "./middlewares/crossDomain";
 import errorHandler from "./middlewares/errorHandler";
 
