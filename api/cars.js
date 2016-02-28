@@ -41,6 +41,7 @@ router.post("/", (req, res, next) => {
         make: req.body.make,
         year: req.body.year,
         number_of_seats: req.body.number_of_seats,
+        price: req.body.price,
         colour: req.body.colour,
         image: req.body.image,
         summary: req.body.summary,
@@ -65,6 +66,7 @@ router.put("/", (req, res, next) => {
                 make: req.body.make || carModel.get("make"),
                 year: req.body.year || carModel.get("year"),
                 number_of_seats: req.body.number_of_seats || carModel.get("number_of_seats"),
+                price: req.body.price || carModel.get("price"),
                 colour: req.body.colour || carModel.get("colour"),
                 image: req.body.image || carModel.get("image"),
                 summary: req.body.summary || carModel.get("summary")

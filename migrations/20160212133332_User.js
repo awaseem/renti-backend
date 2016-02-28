@@ -24,6 +24,7 @@ exports.up = function(knex, Promise) {
             table.string("model");
             table.string("summary");
             table.integer("year");
+            table.decimal("price");
             table.integer("number_of_seats");
             table.integer("user_id")
                 .references("uid")

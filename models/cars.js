@@ -9,6 +9,7 @@ const creationRules = {
     model: "required",
     make: "required",
     summary: "required",
+    "price": ["required", "price"],
     year: ["required", "numeric", "maxLength:4"],
     number_of_seats: ["required", "numeric"],
     colour: "required",
