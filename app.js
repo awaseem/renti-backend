@@ -6,10 +6,17 @@ import express from "express";
 import bodyparser from "body-parser";
 import config from "nconf";
 import expressConfig from "./config/express";
-import { router as helloApi } from "./api/hello";
+import helloApi from "./api/hello";
+import userApi from "./api/users";
+import creditCardApi from "./api/creditCard";
+import userFeedbackApi from "./api/userFeedback";
+import carsApi from "./api/cars";
+import carFeedbackApi from "./api/carFeedback";
+import transactionsApi from "./api/transactions";
 import { allowCrossDomain } from "./middlewares/crossDomain";
+import errorHandler from "./middlewares/errorHandler";
 
-let app = express();
+const app = express();
 
 // Setup our config staging, check environment variables first then
 // look for a file
@@ -37,11 +44,19 @@ else {
 
 // Setup all of our API routes
 app.use("/api/hello", helloApi);
+app.use("/api/user", userApi);
+app.use("/api/creditcard", creditCardApi);
+app.use("/api/userfeedback", userFeedbackApi);
+app.use("/api/carfeedback", carFeedbackApi);
+app.use("/api/car", carsApi);
+app.use("/api/transactions", transactionsApi);
 
 // Catch any other routes and send a 404
 app.all("*", (req, res) => {
     res.status(404).json( { message: "Error: Route does not exist!"} );
 });
+
+app.use(errorHandler);
 
 app.listen(expressConfig.port, function () {
     console.log(`App Running on http://localhost:${expressConfig.port}`);
