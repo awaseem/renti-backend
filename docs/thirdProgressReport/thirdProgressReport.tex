@@ -4,6 +4,7 @@
 \usepackage[usenames,dvipsnames]{color}
 \usepackage{listings} % Required for insertion of code
 \usepackage{textcomp}
+\usepackage{enumitem}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -77,59 +78,70 @@ routes the SQL query is listed.
 \subsection{Users}
 The model of the user:
 
-The public routes:
-\subsubsection{get /api/users/}
+\subsubsection{The public routes:}
+\begin{description}
+\item[get /api/users/] \mbox{}
 \begin{lstlisting}
 SELECT uid, first_name, last_name, address, username, email, image, summary FROM USER;
 \end{lstlisting}
-\subsubsection{get /api/users/:id}
+
+
+\item[get /api/users/:id] \mbox{}
 \begin{lstlisting}
 SELECT uid, first_name, last_name, address, username, email, image, summary FROM USER WHERE uid="id";
 \end{lstlisting}
 
-\subsubsection{post /api/users/signup}
+\item[post /api/users/signup] \mbox{}
 \begin{lstlisting}
 INSERT INTO USER (image, username, password, first_name, last_name, address, summary, date_of_birth, email)
 VALUES ('URL_OF_USER_PHOTO', 'tcollin', 'test', 'Tanner', 'Collin', '123 place rd NW', 'Hi. I love for you to rent one of my cars!', 730869558, 'test@someemail.com');
 \end{lstlisting}
 
-\subsubsection{post /api/users/signin}
+\item[post /api/users/signin] \mbox{}
 \begin{lstlisting}
 SELECT username, password FROM USER where username='tcollin', password='test';
 \end{lstlisting}
-The private routes:
+\end{description}
 
-\subsubsection{get /api/users/}
+\subsubsection{The private routes:}
+
+\begin{description}
+\item[get /api/users/] \mbox{}
 \begin{lstlisting}
 SELECT * FROM USER where uid='1', username='tcollin', password='test';
 \end{lstlisting}
 
-\subsubsection{put /api/users/}
+\item[put /api/users/] \mbox{}
 \begin{lstlisting}
 UPDATE USER SET summary='hi my name is tanner' WHERE summary='Hi. I love for you to rent one of my cars!';
 \end{lstlisting}
 
-\subsubsection{delete /api/users/}
+\item[delete /api/users/] \mbox{}
 \begin{lstlisting}
 DELETE FROM USER WHERE uid='1', username='tcollin', password='test';
 \end{lstlisting}
+\end{description}
 
 \subsection{Credit Card}
-The model of the credit card:
-There are no public routes for credit cards, because of security reasons.
+The model of the credit card, there are no public routes for credit cards because of security reasons.
 
-The private routes are:
-\subsubsection{post /api/creditCard/}
+\subsubsection{The private routes:}
+\begin{description}
+\item[post /api/creditCard/] \mbox{}
 \begin{lstlisting}
 INSERT INTO CREDIT_CARD (credit_card_number, cvv, expiry_date, user_id)
 VALUES (347249711260948, 433, 0617, 1);
 \end{lstlisting}
 
-\subsubsection{delete /api/creditCard/}
+\item[delete /api/creditCard/] \mbox{}
 \begin{lstlisting}
 DELETE FROM CREDIT_CARD as c INNER JOIN USER as u ON c.user_id = a.uid WHERE
 a.username='tcollin' AND a.password='test';
 \end{lstlisting}
+\end{description}
+
+\subsection{Cars}
+
 
 
 \section{User Interface Draft Design} % Not sure if we need this section
