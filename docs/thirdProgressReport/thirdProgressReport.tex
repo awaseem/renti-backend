@@ -1,6 +1,30 @@
 \documentclass{article}
 \usepackage{graphicx} % Required to insert images
 \usepackage[hidelinks]{hyperref}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{listings} % Required for insertion of code
+\usepackage{textcomp}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+    language=SQL,
+    showspaces=false,
+    basicstyle=\ttfamily,
+    numbers=none,
+    keywordstyle=\color{blue},          % keyword style
+    commentstyle=\color{dkgreen},       % comment style
+    stringstyle=\color{mauve},         % string literal style
+    upquote=true,
+    rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+    tabsize=3,                      % sets default tabsize to 3 spaces
+    captionpos=b,                   % sets the caption-position to bottom
+    breaklines=true,                % sets automatic line breaking
+    breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+    showstringspaces=false,
+}
 
 % Margins
 \topmargin=-0.45in
@@ -42,7 +66,7 @@ Each project member will be responsible for creating components to interact with
 Work is currently started and the projected completion date for the front end is end of March.
 
 \section{Object Orientated Model}
-The object orientated model is is shown in Fig: \ref{fig:oomodel}. For each of the
+The object orientated model is is shown in Figure \ref{fig:oomodel}. For each of the
 routes the SQL query is listed.
 \begin{figure}[ht!]
     \includegraphics[keepaspectratio, width=0.8\textwidth]{ObjectOrientatedDesign}
@@ -52,34 +76,60 @@ routes the SQL query is listed.
 \end{figure}
 \subsection{Users}
 The model of the user:
+
 The public routes:
 \subsubsection{get /api/users/}
+\begin{lstlisting}
 SELECT uid, first_name, last_name, address, username, email, image, summary FROM USER;
+\end{lstlisting}
 \subsubsection{get /api/users/:id}
+\begin{lstlisting}
 SELECT uid, first_name, last_name, address, username, email, image, summary FROM USER WHERE uid="id";
+\end{lstlisting}
+
 \subsubsection{post /api/users/signup}
+\begin{lstlisting}
 INSERT INTO USER (image, username, password, first_name, last_name, address, summary, date_of_birth, email)
 VALUES ('URL_OF_USER_PHOTO', 'tcollin', 'test', 'Tanner', 'Collin', '123 place rd NW', 'Hi. I love for you to rent one of my cars!', 730869558, 'test@someemail.com');
+\end{lstlisting}
+
 \subsubsection{post /api/users/signin}
+\begin{lstlisting}
 SELECT username, password FROM USER where username='tcollin', password='test';
+\end{lstlisting}
 The private routes:
+
 \subsubsection{get /api/users/}
+\begin{lstlisting}
 SELECT * FROM USER where uid='1', username='tcollin', password='test';
+\end{lstlisting}
+
 \subsubsection{put /api/users/}
+\begin{lstlisting}
 UPDATE USER SET summary='hi my name is tanner' WHERE summary='Hi. I love for you to rent one of my cars!';
+\end{lstlisting}
+
 \subsubsection{delete /api/users/}
+\begin{lstlisting}
 DELETE FROM USER WHERE uid='1', username='tcollin', password='test';
+\end{lstlisting}
 
 \subsection{Credit Card}
 The model of the credit card:
-There are no public routes for credit cards, because of security reasons
-The private routes:
+There are no public routes for credit cards, because of security reasons.
+
+The private routes are:
 \subsubsection{post /api/creditCard/}
+\begin{lstlisting}
 INSERT INTO CREDIT_CARD (credit_card_number, cvv, expiry_date, user_id)
 VALUES (347249711260948, 433, 0617, 1);
+\end{lstlisting}
+
 \subsubsection{delete /api/creditCard/}
+\begin{lstlisting}
 DELETE FROM CREDIT_CARD as c INNER JOIN USER as u ON c.user_id = a.uid WHERE
 a.username='tcollin' AND a.password='test';
+\end{lstlisting}
 
 
 \section{User Interface Draft Design} % Not sure if we need this section
