@@ -104,7 +104,6 @@ SELECT username, password FROM USER where username='tcollin', password='test';
 \end{description}
 
 \subsubsection{The private routes:}
-
 \begin{description}
 \item[get /api/users/] \mbox{}
 \begin{lstlisting}
@@ -113,7 +112,7 @@ SELECT * FROM USER where uid='1', username='tcollin', password='test';
 
 \item[put /api/users/] \mbox{}
 \begin{lstlisting}
-UPDATE USER SET summary='hi my name is tanner' WHERE summary='Hi. I love for you to rent one of my cars!';
+UPDATE USER SET summary='hi my name is tanner' WHERE uid='1';
 \end{lstlisting}
 
 \item[delete /api/users/] \mbox{}
@@ -141,8 +140,34 @@ a.username='tcollin' AND a.password='test';
 \end{description}
 
 \subsection{Cars}
+\begin{description}
+\subsubsection{The public routes:}
+\item[post /api/cars/] \mbox{}
+\begin{lstlisting}
+SELECT * FROM CARS;
+\end{lstlisting}
+\item[post /api/cars/:plate] \mbox{}
+\begin{lstlisting}
+SELECT * FROM CARS WHERE license_plate='plate';
+\end{lstlisting}
+\end{description}
 
-
+\subsubsection{The private routes:}
+\begin{description}
+\item[post /api/cars/] \mbox{}
+\begin{lstlisting}
+INSERT INTO CARS (license_plate, model, make, year, number_of_seats, price, colour, image, summary, user_id)
+VALUES ('892WSM', 'Focus RS', 'Ford', 2016, 4, 200, 'Blue', 'URL_OF_CAR_PHOTO', 'This car is fast', 2);
+\end{lstlisting}
+\item[put /api/cars/] \mbox{}
+\begin{lstlisting}
+UPDATE CARS SET model='VW', make='Golf R' WHERE license_plate='892WSM' AND user_id='2';
+\end{lstlisting}
+\item[delete /api/cars/] \mbox{}
+\begin{lstlisting}
+DELETE FROM CARS AS c WHERE c.uid='2' AND c.license_plate='892WSM';
+\end{lstlisting}
+\end{description}
 
 \section{User Interface Draft Design} % Not sure if we need this section
 
