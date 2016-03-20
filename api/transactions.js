@@ -29,7 +29,7 @@ router.post("/", (req, res, next) => {
     }).save(undefined, { method: "insert"})
         .then((newTransaction) => {
             res.status(200).json({
-                message: "Creataed new transaction!",
+                message: "Created new transaction!",
                 data: newTransaction
             });
         })
