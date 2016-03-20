@@ -50,6 +50,8 @@
 \begin{document}
 \maketitle
 \newpage
+\tableofcontents
+\newpage
 
 \section{Introduction}
 This report contains the initial draft design and a progress report for our project Renti, a peer to peer vehicle renting service. The current progress will discuss the
@@ -82,7 +84,7 @@ The model of the user:
 \begin{description}
 \item[get /api/users/] \mbox{}
 \begin{lstlisting}
-SELECT uid, first_name, last_name, address, username, email, image, summary FROM USER;
+SELECT u.uid, u.first_name, u.last_name, u.address, u.username, u.email, u.image, u.summary f.* FROM USER AS u, FEEDBACK_USERS as f WHERE u.uid=f.user_has;
 \end{lstlisting}
 
 
@@ -145,11 +147,11 @@ The model of the cars, contains both public and private routes.
 \begin{description}
 \item[get /api/cars/] \mbox{}
 \begin{lstlisting}
-SELECT * FROM CARS;
+SELECT c.*, f.* FROM CARS AS c, FEEDBACK_CARS as f WHERE c.license_plate=f.car_has;
 \end{lstlisting}
 \item[get /api/cars/:plate] \mbox{}
 \begin{lstlisting}
-SELECT * FROM CARS WHERE license_plate='plate';
+SELECT c.*, f.*  FROM CARS AS c, FEEDBACK_CARS as f WHERE license_plate='plate' AND c.license_plate=f.car_has;
 \end{lstlisting}
 \end{description}
 
@@ -189,6 +191,38 @@ VALUES ('10', '2016-3-27', '2016-3-21', 40, 1, '2','123ABC');
 \item[post /api/transactions/approve] \mbox{}
 \begin{lstlisting}
 UPDATE TRANSACTIONS as t SET pending='0' WHERE c.tid='10' AND EXISTS (Select * FROM CARS as c WHERE t.license_plate=c.license_plate AND c.user_id='2');
+\end{lstlisting}
+\end{description}
+
+\subsection{Car Feedback}
+There are no public routes with car feedback. The feedback is returned with a car get requests.
+
+\subsubsection{The private routes:}
+\begin{description}
+\item[post /api/carfeedback/] \mbox{}
+\begin{lstlisting}
+INSERT INTO FEEDBACK_CARS (fid, comment, rating, user_creator, car_has)
+VALUES ('7', 'This car is really shiny.', '5', '2', '892WSM');
+\end{lstlisting}
+\item[delete /api/carfeedback/] \mbox{}
+\begin{lstlisting}
+DELETE FROM FEEDBACK_CARS AS f WHERE f.fid='7' AND f.user_creator='2';
+\end{lstlisting}
+\end{description}
+
+\subsection{User Feedback}
+There are no public routes with user feedback. The feedback is returned with a user get request.
+
+\subsubsection{The private routes:}
+\begin{description}
+\item[post /api/userfeedback/] \mbox{}
+\begin{lstlisting}
+INSERT INTO FEEDBACK_USERS (fid, comment, rating, user_creator, user_has)
+VALUES ('6', 'This user is not friendly.', '2', '2', '1');
+\end{lstlisting}
+\item[delete /api/userfeedback/] \mbox{}
+\begin{lstlisting}
+DELETE FROM FEEDBACK_USERS WHERE fid='6' AND user_creator='2';
 \end{lstlisting}
 \end{description}
 
