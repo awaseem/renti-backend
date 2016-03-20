@@ -140,13 +140,14 @@ a.username='tcollin' AND a.password='test';
 \end{description}
 
 \subsection{Cars}
-\begin{description}
+The model of the cars, contains both public and private routes.
 \subsubsection{The public routes:}
-\item[post /api/cars/] \mbox{}
+\begin{description}
+\item[get /api/cars/] \mbox{}
 \begin{lstlisting}
 SELECT * FROM CARS;
 \end{lstlisting}
-\item[post /api/cars/:plate] \mbox{}
+\item[get /api/cars/:plate] \mbox{}
 \begin{lstlisting}
 SELECT * FROM CARS WHERE license_plate='plate';
 \end{lstlisting}
@@ -166,6 +167,28 @@ UPDATE CARS SET model='VW', make='Golf R' WHERE license_plate='892WSM' AND user_
 \item[delete /api/cars/] \mbox{}
 \begin{lstlisting}
 DELETE FROM CARS AS c WHERE c.uid='2' AND c.license_plate='892WSM';
+\end{lstlisting}
+\end{description}
+
+\subsection{Transactions}
+\subsubsection{The public routes:}
+\begin{description}
+\item[get /api/transactions/] \mbox{}
+\begin{lstlisting}
+SELECT * FROM TRANSACTIONS AS t WHERE t.plate='123ABC';
+\end{lstlisting}
+\end{description}
+
+\subsubsection{The private routes:}
+\begin{description}
+\item[post /api/transactions/] \mbox{}
+\begin{lstlisting}
+INSERT INTO TRANSACTIONS (tid, date_in, date_out, price, pending, user_renter, car_id)
+VALUES ('10', '2016-3-27', '2016-3-21', 40, 1, '2','123ABC');
+\end{lstlisting}
+\item[post /api/transactions/approve] \mbox{}
+\begin{lstlisting}
+UPDATE TRANSACTIONS as t SET pending='0' WHERE c.tid='10' AND EXISTS (Select * FROM CARS as c WHERE t.license_plate=c.license_plate AND c.user_id='2');
 \end{lstlisting}
 \end{description}
 
