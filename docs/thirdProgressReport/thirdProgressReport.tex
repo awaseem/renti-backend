@@ -5,6 +5,7 @@
 \usepackage{listings} % Required for insertion of code
 \usepackage{textcomp}
 \usepackage{enumitem}
+\usepackage{float}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -56,7 +57,7 @@
 \section{Introduction}
 This report contains the initial draft design and a progress report for our project Renti, a peer to peer vehicle renting service. The current progress will discuss the
 technologies chosen for the framework and much work is done implementing it. As our project uses an Object Relational Mapping (ORM) to access our database we have an
-object orientated model which will be outlined. Lastly, the draft of the user interface is discussed. % This is the weakest introduction yet.
+object orientated model which will be outlined. % This is the weakest introduction yet.
 
 \section{Current Progress and Technologies}
 For the back end of the project we are using Node.js with Express.js, Knex, and Bookshelf (this will be our ORM that handles our queries). The database is using SQLite3 with Bookshelf.js to provide the ORM interface.
@@ -185,8 +186,8 @@ SELECT * FROM TRANSACTIONS AS t WHERE t.plate='123ABC';
 \begin{description}
 \item[post /api/transactions/] \mbox{}
 \begin{lstlisting}
-INSERT INTO TRANSACTIONS (tid, date_in, date_out, price, pending, user_renter, car_id)
-VALUES ('10', '2016-3-27', '2016-3-21', 40, 1, '2','123ABC');
+INSERT INTO TRANSACTIONS (date_in, date_out, price, pending, user_renter, car_id)
+VALUES ('2016-3-27', '2016-3-21', 40, 1, '2','123ABC');
 \end{lstlisting}
 \item[post /api/transactions/approve] \mbox{}
 \begin{lstlisting}
@@ -201,8 +202,8 @@ There are no public routes with car feedback. The feedback is returned with a ca
 \begin{description}
 \item[post /api/carfeedback/] \mbox{}
 \begin{lstlisting}
-INSERT INTO FEEDBACK_CARS (fid, comment, rating, user_creator, car_has)
-VALUES ('7', 'This car is really shiny.', '5', '2', '892WSM');
+INSERT INTO FEEDBACK_CARS (comment, rating, user_creator, car_has)
+VALUES ('This car is really shiny.', '5', '2', '892WSM');
 \end{lstlisting}
 \item[delete /api/carfeedback/] \mbox{}
 \begin{lstlisting}
@@ -217,8 +218,8 @@ There are no public routes with user feedback. The feedback is returned with a u
 \begin{description}
 \item[post /api/userfeedback/] \mbox{}
 \begin{lstlisting}
-INSERT INTO FEEDBACK_USERS (fid, comment, rating, user_creator, user_has)
-VALUES ('6', 'This user is not friendly.', '2', '2', '1');
+INSERT INTO FEEDBACK_USERS (comment, rating, user_creator, user_has)
+VALUES ('This user is not friendly.', '2', '2', '1');
 \end{lstlisting}
 \item[delete /api/userfeedback/] \mbox{}
 \begin{lstlisting}
