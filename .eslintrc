@@ -16,20 +16,19 @@
             2,
             "always"
         ],
-        "no-console": 0
+        "no-var": 2
+    },
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "modules": true,
+            "experimentalObjectRestSpread": true,
+            "blockBindings": true
+        }
     },
     "env": {
         "es6": true,
         "node": true,
         "mocha": true
     },
-    "extends": "eslint:recommended",
-    "ecmaFeatures": {
-        "modules": true,
-        "jsx": true,
-        "experimentalObjectRestSpread": true
-    },
-    "plugins": [
-        "react"
-    ]
 }

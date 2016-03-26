@@ -8,11 +8,12 @@
     "url": "git://github.com/awaseem/RESTful-express-starter.git"
   },
   "scripts": {
+    "eslint": "eslint -c .eslintrc api config middlewares migrations models seeds test",
     "test": "mocha --compilers js:babel-register --timeout 15000",
     "dev": "nodemon app.js --exec babel-node --presets es2015",
     "start": "node main.js",
     "rebuild": "rm dev.sqlite3 && knex migrate:latest && knex seed:run",
-    "postinstall": "knex migrate:latest && knex seed:run" 
+    "postinstall": "knex migrate:latest && knex seed:run"
   },
   "author": "Ali Waseem",
   "license": "MIT",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.3.17",
+    "eslint": "^2.5.1",
     "eslint-plugin-react": "^3.15.0",
     "mocha": "^2.3.4",
     "nodemon": "^1.8.1",
