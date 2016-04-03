@@ -5,7 +5,7 @@ import Transactions from "../models/transactions";
 const router = express.Router();
 
 router.get("/:plate", (req, res, next) => {
-    Transactions.forge({ "car_id": req.params.plate }).fetch()
+    Transactions.where({ "car_id": req.params.plate }).fetchAll()
         .then((transactions) => {
             if (!transactions) throw "No transaction found!";
             res.status(200).json(transactions);
@@ -29,7 +29,7 @@ router.post("/", (req, res, next) => {
     }).save(undefined, { method: "insert"})
         .then((newTransaction) => {
             res.status(200).json({
-                message: "Creataed new transaction!",
+                message: "Created new transaction!",
                 data: newTransaction
             });
         })
