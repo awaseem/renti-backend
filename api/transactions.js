@@ -4,8 +4,21 @@ import Transactions from "../models/transactions";
 
 const router = express.Router();
 
+export const transactionPublicFetch = {
+    withRelated: ["car", "car.users"]
+};
+
 router.get("/:plate", (req, res, next) => {
     Transactions.where({ "car_id": req.params.plate }).fetchAll()
+        .then((transactions) => {
+            if (!transactions) throw "No transaction found!";
+            res.status(200).json(transactions);
+        })
+        .catch(next);
+});
+
+router.get("/user/:uid", (req, res, next) => {
+    Transactions.where({ "user_renter": req.params.uid }).fetchAll(transactionPublicFetch)
         .then((transactions) => {
             if (!transactions) throw "No transaction found!";
             res.status(200).json(transactions);
