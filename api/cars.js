@@ -6,7 +6,9 @@ import { userPublicFetch } from "./users";
 const carPublicFetch = {
     withRelated: [
         "carFeedback",
+        "carFeedback.userCreator",
         "users.userFeedback",
+        "users.userFeedback.userCreator",
         { users: (query) => query.columns(...userPublicFetch.columns) }
     ]
 };
