@@ -67,4 +67,15 @@ router.post("/approve", (req, res, next) => {
         .catch(next);
 });
 
+router.delete("/", (req, res, next) => {
+    Transactions.forge({ tid: req.body.tid }).fetch({ withRelated: "car" })
+        .then((transaction) => {
+            if (!transaction) throw "Transaction does not exist!";
+            if (transaction.get("user_renter") !== req.user.uid) throw "You cannot delete this transaction!";
+            return transaction.destroy();
+        })
+        .then(() => res.status(200).json({ message: "Deleted transaction!" }))
+        .catch(next);
+});
+
 export default router;
