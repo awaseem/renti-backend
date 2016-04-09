@@ -9,7 +9,9 @@ const carPublicFetch = {
         "carFeedback.userCreator",
         "users.userFeedback",
         "users.userFeedback.userCreator",
-        { users: (query) => query.columns(...userPublicFetch.columns) }
+        { users: (query) => query.columns(...userPublicFetch.columns) },
+        { "users.userFeedback.userCreator": (query) => query.columns(...userPublicFetch.columns) },
+        { "carFeedback.userCreator": (query) => query.columns(...userPublicFetch.columns) }
     ]
 };
 

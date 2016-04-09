@@ -10,7 +10,11 @@ const router = express.Router();
 export const userPublicFetch = {
     columns: ["uid", "first_name", "last_name", "address", "username", "email", "image", "summary"],
     withRelated: ["userFeedback", "cars", "cars.carFeedback", "cars.transactions",
-        "cars.transactions.user_renter", "cars.carFeedback.userCreator", "userFeedback.userCreator"]
+                  "cars.transactions.user_renter", "cars.carFeedback.userCreator",
+                  "userFeedback.userCreator",
+                  { "userFeedback.userCreator": (query) => query.columns(...userPublicFetch.columns) },
+                  { "cars.carFeedback.userCreator": (query) => query.columns(...userPublicFetch.columns) }
+              ]
 };
 
 router.get("/", (req, res, next) => {
