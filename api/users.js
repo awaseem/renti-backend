@@ -9,7 +9,12 @@ const router = express.Router();
 
 export const userPublicFetch = {
     columns: ["uid", "first_name", "last_name", "address", "username", "email", "image", "summary"],
-    withRelated: ["userFeedback", "cars", "cars.carFeedback"]
+    withRelated: ["userFeedback", "cars", "cars.carFeedback", "cars.transactions",
+                  "cars.transactions.user_renter", "cars.carFeedback.userCreator",
+                  "userFeedback.userCreator",
+                  { "userFeedback.userCreator": (query) => query.columns(...userPublicFetch.columns) },
+                  { "cars.carFeedback.userCreator": (query) => query.columns(...userPublicFetch.columns) }
+              ]
 };
 
 router.get("/", (req, res, next) => {
@@ -61,6 +66,7 @@ router.post("/signin", (req, res, next) => {
                     address: model.get("address"),
                     username: model.get("username"),
                     email: model.get("email"),
+                    image: model.get("image"),
                     date_of_birth: model.get("date_of_birth")
                 }, jwtConfig.secret, {expiresIn: jwtConfig.expire} );
                 res.status(200).json({ message: "Enjoy the token!", token: accessToken });

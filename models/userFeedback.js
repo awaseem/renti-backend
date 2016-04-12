@@ -17,6 +17,10 @@ export default bookshelf.Model.extend({
 
     idAttribute: "fid",
 
+    userCreator: function () {
+        return this.belongsTo(Users, "user_creator");
+    },
+
     users: function () {
         return this.belongsTo(Users, "user_has");
     },

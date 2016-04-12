@@ -1,6 +1,7 @@
 import bookshelf from "../bookshelf";
 import checkIt from "checkit";
 import Cars from "./cars";
+import Users from "./users";
 
 const creationRules = {
     comment: "required",
@@ -16,6 +17,10 @@ export default bookshelf.Model.extend({
     tableName: "feedback_cars",
 
     idAttribute: "fid",
+
+    userCreator: function () {
+        return this.belongsTo(Users, "user_creator");
+    },
 
     cars: function () {
         return this.belongsTo(Cars, "car_has");

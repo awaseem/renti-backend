@@ -1,4 +1,4 @@
-var bcrypt = require("bcrypt");
+var bcrypt = require("bcrypt"); // eslint-disable-line
 
 exports.seed = function(knex, Promise) {
     return Promise.join(
