@@ -88,13 +88,18 @@ The model of the user:
 \begin{description}
 \item[get /api/users/] \mbox{}
 \begin{lstlisting}
-SELECT u.uid, u.first_name, u.last_name, u.address, u.username, u.email, u.image, u.summary f.* FROM USER AS u, FEEDBACK_USERS as f WHERE u.uid=f.user_has;
+SELECT u.uid, u.first_name, u.last_name, u.address, u.username, u.email, u.image, u.summary, f.*, userF.uid, userF.first_name, userF.last_name, userF.address, userF.username, userF.email, userF.image, userF.summary, c.*, carF.*, carFUser.uid, carFUser.first_name, carFUser.last_name, carFUser.address, carFUser.username, carFUser.email, carFUser.image, carFUser.summary, t.*, userT.uid, userT.first_name, userT.last_name, userT.address, userT.username, userT.email, userT.image, userT.summary
+FROM USER AS u, FEEDBACK_USERS AS f, USER AS userF, USER AS userT, USER AS carFUser, CARS AS c, FEEDBACK_CARS AS carF
+WHERE u.uid=f.user_has AND c.user_id=u.uid AND c.license_plate=carF.car_has AND carFUser.uid=carF.user_creator AND c.license_plate=t.car_id AND t.user_renter=userT.uid;
 \end{lstlisting}
 
 
 \item[get /api/users/:id] \mbox{}
 \begin{lstlisting}
-SELECT uid, first_name, last_name, address, username, email, image, summary FROM USER WHERE uid="id";
+SELECT u.uid, u.first_name, u.last_name, u.address, u.username, u.email, u.image, u.summary, f.*, userF.uid, userF.first_name, userF.last_name, userF.address, userF.username, userF.email, userF.image, userF.summary, c.*, carF.*, carFUser.uid, carFUser.first_name, carFUser.last_name, carFUser.address, carFUser.username, carFUser.email, carFUser.image, carFUser.summary, t.*, userT.uid, userT.first_name, userT.last_name, userT.address, userT.username, userT.email, userT.image, userT.summary
+FROM USER AS u, FEEDBACK_USERS AS f, USER AS userF, USER AS userT, USER AS carFUser, CARS AS c, FEEDBACK_CARS AS carF, TRANSACTIONS as t
+WHERE u.uid="id" AND u.uid=f.user_has AND c.user_id=u.uid AND c.license_plate=carF.car_has AND carFUser.uid=carF.user_creator AND c.license_plate=t.car_id AND t.user_renter=userT.uid;
+
 \end{lstlisting}
 
 \item[post /api/users/signup] \mbox{}
@@ -113,7 +118,9 @@ SELECT username, password FROM USER where username='tcollin', password='test';
 \begin{description}
 \item[get /api/users/] \mbox{}
 \begin{lstlisting}
-SELECT * FROM USER where uid='1', username='tcollin', password='test';
+SELECT u.uid, u.first_name, u.last_name, u.address, u.username, u.email, u.image, u.summary, f.*, userF.uid, userF.first_name, userF.last_name, userF.address, userF.username, userF.email, userF.image, userF.summary, c.*, carF.*, carFUser.uid, carFUser.first_name, carFUser.last_name, carFUser.address, carFUser.username, carFUser.email, carFUser.image, carFUser.summary, t.*, userT.uid, userT.first_name, userT.last_name, userT.address, userT.username, userT.email, userT.image, userT.summary
+FROM USER AS u, FEEDBACK_USERS AS f, USER AS userF, USER AS userT, USER AS carFUser, CARS AS c, FEEDBACK_CARS AS carF, TRANSACTIONS as t, CREDIT_CARD AS cred
+WHERE u.uid=f.user_has AND c.user_id=u.uid AND c.license_plate=carF.car_has AND carFUser.uid=carF.user_creator AND c.license_plate=t.car_id AND t.user_renter=userT.uid AND cred.user_id=u.uid;
 \end{lstlisting}
 
 \item[put /api/users/] \mbox{}
@@ -151,11 +158,15 @@ The model of the cars, contains both public and private routes.
 \begin{description}
 \item[get /api/cars/] \mbox{}
 \begin{lstlisting}
-SELECT c.*, f.* FROM CARS AS c, FEEDBACK_CARS as f WHERE c.license_plate=f.car_has;
+SELECT c.*, carF.*, carOwner.uid, carOwner.first_name, carOwner.last_name, carOwner.address, carOwner.username, carOwner.email, carOwner.image, carOwner.summary, carFcreator.uid, carFcreator.first_name, carFcreator.last_name, carFcreator.address, carFcreator.username, carFcreator.email, carFcreator.image, carFcreator.summary, userF.*, userFcreator.uid, userFcreator.first_name, userFcreator.last_name, userFcreator.address, userFcreator.username, userFcreator.email, userFcreator.image, userFcreator.summary,
+FROM CARS AS c, FEEDBACK_CARS AS carF, USER AS carOwner, USER AS carFcreator, FEEDBACK_USERS AS userF, USER AS userFcreator
+WHERE c.license_plate=carF.car_has AND carFcreator.uid=carF.user_creator AND c.user_id=carOwner.uid AND userF.user_has=carOwner.uid AND userF.user_creator=userFcreator.uid;
 \end{lstlisting}
 \item[get /api/cars/:plate] \mbox{}
 \begin{lstlisting}
-SELECT c.*, f.*  FROM CARS AS c, FEEDBACK_CARS as f WHERE license_plate='plate' AND c.license_plate=f.car_has;
+SELECT c.*, carF.*, carOwner.uid, carOwner.first_name, carOwner.last_name, carOwner.address, carOwner.username, carOwner.email, carOwner.image, carOwner.summary, carFcreator.uid, carFcreator.first_name, carFcreator.last_name, carFcreator.address, carFcreator.username, carFcreator.email, carFcreator.image, carFcreator.summary, userF.*, userFcreator.uid, userFcreator.first_name, userFcreator.last_name, userFcreator.address, userFcreator.username, userFcreator.email, userFcreator.image, userFcreator.summary,
+FROM CARS AS c, FEEDBACK_CARS AS carF, USER AS carOwner, USER AS carFcreator, FEEDBACK_USERS AS userF, USER AS userFcreator
+WHERE c.license_plate="plate" AND c.license_plate=carF.car_has AND carFcreator.uid=carF.user_creator AND c.user_id=carOwner.uid AND userF.user_has=carOwner.uid AND userF.user_creator=userFcreator.uid;
 \end{lstlisting}
 \end{description}
 
@@ -182,6 +193,12 @@ DELETE FROM CARS AS c WHERE c.uid='2' AND c.license_plate='892WSM';
 \item[get /api/transactions/] \mbox{}
 \begin{lstlisting}
 SELECT * FROM TRANSACTIONS AS t WHERE t.plate='123ABC';
+\end{lstlisting}
+\item[get /api/transactions/user/:uid] \mbox{}
+\begin{lstlisting}
+SELECT t.*, c.*,  u.uid, u.first_name, u.last_name, u.address, u.username, u.email, u.image, u.summary
+FROM TRANSACTIONS AS t, CAR AS c, USER AS u,
+WHERE u.uid="uid" AND c.user_id=u.uid AND t.plate=c.license_plate;
 \end{lstlisting}
 \end{description}
 
