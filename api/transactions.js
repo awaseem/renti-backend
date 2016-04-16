@@ -1,11 +1,12 @@
 import express from "express";
 import auth from "../middlewares/auth";
 import Transactions from "../models/transactions";
+import { userPublicFetch } from "./users";
 
 const router = express.Router();
 
 export const transactionPublicFetch = {
-    withRelated: ["car", "car.users"]
+    withRelated: ["car", "car.users", { "car.users": (query) => query.columns(...userPublicFetch.columns) }]
 };
 
 router.get("/:plate", (req, res, next) => {
