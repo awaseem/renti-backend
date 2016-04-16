@@ -1,11 +1,11 @@
 {
-  "name": "RESTful-express-starter",
+  "name": "Renti-Backend",
   "version": "1.0.0",
   "description": "A simple RESTful API starter with Express and Mocha",
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/awaseem/RESTful-express-starter.git"
+    "url": "https://github.com/awaseem/renti-backend.git"
   },
   "scripts": {
     "eslint": "eslint -c .eslintrc api config middlewares migrations models seeds test",
