@@ -113,7 +113,7 @@ web and android.
 \end{figure}
 
 \section{Object Orientated Model}
-The object orientated model is is shown in Figure \ref{fig:oomodel}. For each of the
+The object orientated model is shown in Figure \ref{fig:oomodel}. For each of the
 routes the SQL query is listed.
 \begin{figure}[ht!]
     \centering
@@ -297,6 +297,119 @@ This is the hierarchical design of Renti. Most of the database options are avail
 \end{figure}
 
 \section{User Manual}
+This section will contain instructions on how to use Renti. Both the website and mobile app are used the same way, so only instructions on website usage will be given. The website will be broken down into web pages, and each web page will have information on its usage.
+
+Each web page has a menu bar at the top with three links. Below the menu is a header containing the Reni logo, Renti slogan, and a picture of the Calgary skyline.
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[keepaspectratio, width=\textwidth]{menubarloggedout}
+    \caption{Menu bar when the user is not logged in}
+    \label{fig:menubarloggedout}
+\end{figure}
+
+\subsection{Home Page}
+The home page is the page that is first loaded when a user launches the Renti website. It contains a search bar and a list of all available cars.
+
+\subsubsection{Searching}
+In order to search for the car you would like to rent, type a keyword into the search bar. The cars will be filtered down in real time to match what you typed as closely as possible.
+
+\subsubsection{Car Listing}
+Below the search bar is a listing of all available cars. Each listing includes a picture of the car, the year, make, and model of the car, the owner, the number of seats and color, the cost per day of renting the car, and a button that will take you to the car's rental page.
+
+In order to rent a car, the user must be signed in with an account.
+
+\subsection{Sign Up}
+To sign up for a Renti account, click the Sign Up button in the menu at the top of the page. You will be taken to a page with a sign up form.
+
+Enter your details into the form and press Submit. If you have entered all of your details correctly, and account will be made for you. If there were any formatting errors in the information you provided, the erroneous field will turn red and instructions on how to correct your input will be provided.
+
+Once you press submit, a Renti account will be created for you and you will automatically be signed in to Renti.
+
+\subsection{Log In}
+If you already have an account with Renti, you can sign in by pressing the blue Log In button in the menu at the top of the page. You will be taken to a page with a log in form.
+
+Enter your username and password into the form and press Submit. If you have entered valid log in information, you will be taken back to the home page.
+
+The menu bar links will now change. A link with your first name will take you to your profile page. The Log in button will now be replaced with a Log out button.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[keepaspectratio, width=\textwidth]{menubarloggedin}
+    \caption{Menu bar when the user is logged in}
+    \label{fig:menubarloggedin}
+\end{figure}
+
+\subsection{Log out}
+When you are done using Renti, you can sign out by pressing the red Log out button in the menu at the top of the page. You will be taken to a page with a log in form.
+
+\subsection{Edit Profile}
+If you are logged in to Renti, you can edit your profile page by pressing your name in the menu at the top of the page.
+
+\subsubsection{Your Profile}
+This part of the page has your picture, name, username, email, address and summary. To edit any of these details, press the green Edit User button on the bottom of your profile.
+
+In order to rent cars, you must have a credit card added to your account. Press the green Add Credit Card button on the bottom of your profile to be taken to a page where you can add a new credit card. Any existing credit card information on your account will be deleted.
+
+In order to add your own car to rent, press the green Add Car button on the bottom of your profile. You will be taken to a page where you can add a new car.
+
+\subsubsection{Your Vehicles}
+This part of the page lists all the vehicles you are offering for rent. Information about each vehicle will be displayed. If you would like to edit any of the information, press the green Edit button on the bottom of the vehicle listing. This will expand a form allowing you to edit any of the vehicles details.
+
+To save your changes, press the green Submit Query button. 
+
+To cancel editing the vehicle, press the blue Cancel button.
+
+To delete the vehicle, press the red Delete button.
+
+\subsubsection{Loans on your car}
+This part of the page lists all the transactions on all the vehicles you are offering to load. If someone is looking to rent your vehicle, it will be listed here with an Approve button. You may approve the rental by clicking this button, or deny it by pressing the deny button. If any of your vehicles are out for rental, they will also be listed here.
+
+\subsubsection{Your renting history}
+This part of the page lists all the vehicles you are looking to rent, or have previously rented you may cancel rentals here at any time by pressing the Cancel button.
+
+\subsection{Enter a new Credit Card}
+In order to rent cars, you must have a credit card added to your account. Press the green Add Credit Card button on the edit profile page to be taken to a page where you can add a new credit card. Any existing credit card information on your account will be deleted.
+
+The form requires a valid credit card number. If you would like to test the form without using your real number, you may use the sample credit card number "4444444444444448". The CVV can be any three numbers.
+
+Once you have completed your credit card information, press the green Submit button to save it.
+
+\subsection{Add a new car}
+To add a new car that you would like to rent, press the green Add Car button on the edit profile page to be taken to a page where you can add information about a new car.
+
+Fill out the form with details about your car and press the green Submit button to save it. A car will be added to your account which others can rent from you.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[keepaspectratio, scale=0.5]{carcard}
+    \caption{An example car listing}
+    \label{fig:carcard}
+\end{figure}
+
+\subsection{Vehicle Information}
+To view the vehicle information page for a certain vehicle, click the vehicle's title in its lising on the home page. For example, the title of the vehicle listing in Figure \ref{fig:carcard} is "2010 honda civic".
+
+This will bring you to a page outlining detailed information about the vehicle. A picture is displayed, along with the price, owner, number of seats, color, and a summary. Below this information is a list of comments that users have submitted about the vehicle.
+
+Each vehicle has an information page like this.
+
+\subsection{User Information}
+To view the user information page for a certain user, click the username of the vehicle's owner in its listing on the home page or on the Vehicle Information page. For example, the owner of the vehicle in the listing in Figure \ref{fig:carcard} is "awaseem".
+
+This will bring you to a page outlining detailed ifnormation about a perticular user. The user's picture is displayed, along with their name, username, email, and a summary. A listing of all the vehicles they have available for rent are listed to the right of this information. Below this information is a list of comments that other users have submitted about this perticular user.
+
+Each vehicle has an information page like this.
+
+\subsection{Renting a vehicle}
+To rent a vehicle, press the blue Rent button in the car listing on either the Home Page, Vehicle Information page, or User Information page. For example, a blue Rent button can be seen on the bottom of figure \ref{fig:carcard}.
+
+This will bring you to a page with the vehicle's listing at the top.
+
+Below this listing, you can choose a start date and an end date for your rental. Clicking the fields will cause a calendar date picker to pop up, reducing the need for keyboard input. When you change a date, the total rental price will be updated and it can be seen directly below the car listing. You may only rent the vehicle over an interval that is not already booked.
+
+Once you are satisfied with the dates and the price, press the green Rent button on the bottom of the page to submit your request to rent the vehicle. The owner must first approve the rental before you may rent it.
+
+After clicking the green Rent button, you will be brought to your Edit Profile page, and the new rental will be added to the section titled Your renting history.
 
 \section{Conclusion}
 The design and functional implementation of Renti is completed. This report outlined the technical requirements, database design, user manual of the application. For the database design the relational model, object orientated model, and sample SQL queries which may be a representation of what our Object Relational Mapping layer would do. The general hierarchical structure and user manual was also provided.
