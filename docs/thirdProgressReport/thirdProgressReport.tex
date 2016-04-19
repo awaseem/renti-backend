@@ -1,6 +1,32 @@
 \documentclass{article}
 \usepackage{graphicx} % Required to insert images
 \usepackage[hidelinks]{hyperref}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{listings} % Required for insertion of code
+\usepackage{textcomp}
+\usepackage{enumitem}
+\usepackage{float}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+    language=SQL,
+    showspaces=false,
+    basicstyle=\ttfamily,
+    numbers=none,
+    keywordstyle=\color{blue},          % keyword style
+    commentstyle=\color{dkgreen},       % comment style
+    stringstyle=\color{mauve},         % string literal style
+    upquote=true,
+    rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+    tabsize=3,                      % sets default tabsize to 3 spaces
+    captionpos=b,                   % sets the caption-position to bottom
+    breaklines=true,                % sets automatic line breaking
+    breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+    showstringspaces=false,
+}
 
 % Margins
 \topmargin=-0.45in
@@ -25,27 +51,182 @@
 \begin{document}
 \maketitle
 \newpage
+\tableofcontents
+\newpage
 
 \section{Introduction}
 This report contains the initial draft design and a progress report for our project Renti, a peer to peer vehicle renting service. The current progress will discuss the
 technologies chosen for the framework and much work is done implementing it. As our project uses an Object Relational Mapping (ORM) to access our database we have an
-object orientated model which will be outlined. Lastly, the draft of the user interface is discussed. % This is the weakest introduction yet.
+object orientated model which will be outlined. % This is the weakest introduction yet.
 
 \section{Current Progress and Technologies}
-For the back end of the project we are using Node.js with <ALI INSERT THE LONG LIST OF JAVASCRIPT FRAMEWORKS THAT WE USE>. The database is using SQLite3 with Bookshelf.js to provide the ORM interface.
+For the back end of the project we are using Node.js with Express.js, Knex, and Bookshelf (this will be our ORM that handles our queries). The database is using SQLite3 with Bookshelf.js to provide the ORM interface.
 The back end is finished and the API is tested. As the front end is implemented there will likely need to be some changes to the API but it is in a state where work can be started on the front end
 for the web application and possibly the mobile application.
 
-The front end will be implemented using <INSERT MORE WEB JARGON HERE>.
+The front end will be implemented using React.js and Semantic-UI.
 The boiler plate code will be taken from Ali Waseem's blog including functions like user authentication. % Not sure if we should bother mentioning this but I have no idea what to say in this report.
 Each project member will be responsible for creating components to interact with the back end API.
 Work is currently started and the projected completion date for the front end is end of March.
 
 \section{Object Orientated Model}
+The object orientated model is is shown in Figure \ref{fig:oomodel}. For each of the
+routes the SQL query is listed.
+\begin{figure}[ht!]
+    \includegraphics[keepaspectratio, width=0.8\textwidth]{ObjectOrientatedDesign}
+    \caption{Database Object Orientated Model}
+    \centering
+    \label{fig:oomodel}
+\end{figure}
+\subsection{Users}
+The model of the user:
+
+\subsubsection{The public routes:}
+\begin{description}
+\item[get /api/users/] \mbox{}
+\begin{lstlisting}
+SELECT u.uid, u.first_name, u.last_name, u.address, u.username, u.email, u.image, u.summary f.* FROM USER AS u, FEEDBACK_USERS as f WHERE u.uid=f.user_has;
+\end{lstlisting}
 
 
-\section{User Interface Draft Design} % Not sure if we need this section
+\item[get /api/users/:id] \mbox{}
+\begin{lstlisting}
+SELECT uid, first_name, last_name, address, username, email, image, summary FROM USER WHERE uid="id";
+\end{lstlisting}
+
+\item[post /api/users/signup] \mbox{}
+\begin{lstlisting}
+INSERT INTO USER (image, username, password, first_name, last_name, address, summary, date_of_birth, email)
+VALUES ('URL_OF_USER_PHOTO', 'tcollin', 'test', 'Tanner', 'Collin', '123 place rd NW', 'Hi. I love for you to rent one of my cars!', 730869558, 'test@someemail.com');
+\end{lstlisting}
+
+\item[post /api/users/signin] \mbox{}
+\begin{lstlisting}
+SELECT username, password FROM USER where username='tcollin', password='test';
+\end{lstlisting}
+\end{description}
+
+\subsubsection{The private routes:}
+\begin{description}
+\item[get /api/users/] \mbox{}
+\begin{lstlisting}
+SELECT * FROM USER where uid='1', username='tcollin', password='test';
+\end{lstlisting}
+
+\item[put /api/users/] \mbox{}
+\begin{lstlisting}
+UPDATE USER SET summary='hi my name is tanner' WHERE uid='1';
+\end{lstlisting}
+
+\item[delete /api/users/] \mbox{}
+\begin{lstlisting}
+DELETE FROM USER WHERE uid='1', username='tcollin', password='test';
+\end{lstlisting}
+\end{description}
+
+\subsection{Credit Card}
+The model of the credit card, there are no public routes for credit cards because of security reasons.
+
+\subsubsection{The private routes:}
+\begin{description}
+\item[post /api/creditCard/] \mbox{}
+\begin{lstlisting}
+INSERT INTO CREDIT_CARD (credit_card_number, cvv, expiry_date, user_id)
+VALUES (347249711260948, 433, 0617, 1);
+\end{lstlisting}
+
+\item[delete /api/creditCard/] \mbox{}
+\begin{lstlisting}
+DELETE FROM CREDIT_CARD as c INNER JOIN USER as u ON c.user_id = a.uid WHERE
+a.username='tcollin' AND a.password='test';
+\end{lstlisting}
+\end{description}
+
+\subsection{Cars}
+The model of the cars, contains both public and private routes.
+\subsubsection{The public routes:}
+\begin{description}
+\item[get /api/cars/] \mbox{}
+\begin{lstlisting}
+SELECT c.*, f.* FROM CARS AS c, FEEDBACK_CARS as f WHERE c.license_plate=f.car_has;
+\end{lstlisting}
+\item[get /api/cars/:plate] \mbox{}
+\begin{lstlisting}
+SELECT c.*, f.*  FROM CARS AS c, FEEDBACK_CARS as f WHERE license_plate='plate' AND c.license_plate=f.car_has;
+\end{lstlisting}
+\end{description}
+
+\subsubsection{The private routes:}
+\begin{description}
+\item[post /api/cars/] \mbox{}
+\begin{lstlisting}
+INSERT INTO CARS (license_plate, model, make, year, number_of_seats, price, colour, image, summary, user_id)
+VALUES ('892WSM', 'Focus RS', 'Ford', 2016, 4, 200, 'Blue', 'URL_OF_CAR_PHOTO', 'This car is fast', 2);
+\end{lstlisting}
+\item[put /api/cars/] \mbox{}
+\begin{lstlisting}
+UPDATE CARS SET model='VW', make='Golf R' WHERE license_plate='892WSM' AND user_id='2';
+\end{lstlisting}
+\item[delete /api/cars/] \mbox{}
+\begin{lstlisting}
+DELETE FROM CARS AS c WHERE c.uid='2' AND c.license_plate='892WSM';
+\end{lstlisting}
+\end{description}
+
+\subsection{Transactions}
+\subsubsection{The public routes:}
+\begin{description}
+\item[get /api/transactions/] \mbox{}
+\begin{lstlisting}
+SELECT * FROM TRANSACTIONS AS t WHERE t.plate='123ABC';
+\end{lstlisting}
+\end{description}
+
+\subsubsection{The private routes:}
+\begin{description}
+\item[post /api/transactions/] \mbox{}
+\begin{lstlisting}
+INSERT INTO TRANSACTIONS (date_in, date_out, price, pending, user_renter, car_id)
+VALUES ('2016-3-27', '2016-3-21', 40, 1, '2','123ABC');
+\end{lstlisting}
+\item[post /api/transactions/approve] \mbox{}
+\begin{lstlisting}
+UPDATE TRANSACTIONS as t SET pending='0' WHERE c.tid='10' AND EXISTS (Select * FROM CARS as c WHERE t.license_plate=c.license_plate AND c.user_id='2');
+\end{lstlisting}
+\end{description}
+
+\subsection{Car Feedback}
+There are no public routes with car feedback. The feedback is returned with a car get requests.
+
+\subsubsection{The private routes:}
+\begin{description}
+\item[post /api/carfeedback/] \mbox{}
+\begin{lstlisting}
+INSERT INTO FEEDBACK_CARS (comment, rating, user_creator, car_has)
+VALUES ('This car is really shiny.', '5', '2', '892WSM');
+\end{lstlisting}
+\item[delete /api/carfeedback/] \mbox{}
+\begin{lstlisting}
+DELETE FROM FEEDBACK_CARS AS f WHERE f.fid='7' AND f.user_creator='2';
+\end{lstlisting}
+\end{description}
+
+\subsection{User Feedback}
+There are no public routes with user feedback. The feedback is returned with a user get request.
+
+\subsubsection{The private routes:}
+\begin{description}
+\item[post /api/userfeedback/] \mbox{}
+\begin{lstlisting}
+INSERT INTO FEEDBACK_USERS (comment, rating, user_creator, user_has)
+VALUES ('This user is not friendly.', '2', '2', '1');
+\end{lstlisting}
+\item[delete /api/userfeedback/] \mbox{}
+\begin{lstlisting}
+DELETE FROM FEEDBACK_USERS WHERE fid='6' AND user_creator='2';
+\end{lstlisting}
+\end{description}
 
 \section{Conclusion}
-
+The above model and SQL queries are demonstrate how we will access and manipulate the database for our website Renti. The SQL queries will be automatically implemented by the ORM but they accurately demonstrate the database actions that the API presents.
 \end{document}
