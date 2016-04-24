@@ -4,11 +4,15 @@ The project will be an implementation of user driven rental service for cars. Cu
 
 ## Setup
 
-Please ensure that you have Node.js and NPM installed. **Node version should be at least 4.2.2 and NPM version should be at least 3.0.0**. **You also need to ensure that sqlite is installed on your system and ensure that proper g++ and make utilities are installed (this is needed for our bcrypt module to work)! If you are on an ubuntu, this can be solved with `sudo apt-get install build-essential`**. After all the requirements are met, follow the steps below to get setup:
+Please ensure that you have Node.js and NPM installed. **Node version should be at least 4.2.2 and NPM version should be at least 3.3.12**. **You also need to ensure that sqlite is installed on your system and ensure that proper g++ and make utilities are installed (this is needed for our bcrypt module to work)! If you are on an ubuntu, this can be solved with `sudo apt-get install build-essential`**. After all the requirements are met, follow the steps below to get setup:
 
 Install all dependencies:
 ```
 npm install
+```
+Build the database:
+```
+npm run buildDB
 ```
 When all dependencies are installed properly, you either start development environment:
 ```
@@ -19,7 +23,7 @@ Or start production environment:
 npm start
 ```
 
-NOTE: Once the npm install is complete, the filler sql script is run automatically and generates a database with data. The filler sql script is located within `seeds/filler.js`
+NOTE: The filler sql script is run automatically and generates a database with data. The filler sql script is located within `seeds/filler.js`
 
 Once the backend is running, head over to the Renti Front End to start the web application.
 
