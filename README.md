@@ -4,7 +4,7 @@ The project will be an implementation of user driven rental service for cars. Cu
 
 ## Setup
 
-Please ensure that you have Node.js and NPM installed. Node version should be at least 4.2.2 and NPM version should be at least 2.0.0
+Please ensure that you have Node.js and NPM installed. Node version should be at least 4.2.2 and NPM version should be at least 2.0.0. You also need to ensure that sqlite is installed on your system! After all the requirements are met, follow the steps below to get setup:
 
 Install all dependencies:
 ```
@@ -18,6 +18,8 @@ Or start production environment:
 ```
 npm start
 ```
+
+NOTE: Once the npm install is complete, the filler sql script is run automatically and generates a database with data. The filler sql script is located within `seeds/filler.js`
 
 Once the backend is running, head over to the Renti Front End to start the web application.
 
