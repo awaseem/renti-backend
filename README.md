@@ -1,5 +1,7 @@
 # Renti Backend REST API
 
+**NOTE: Developed for Mac OSX and Ubuntu, Windows platforms will either not work or not perform as expected**
+
 The project will be an implementation of user driven rental service for cars. Currently there are multiple car sharing companies on the market such as Car2Go and Uber, but there no easy to use service to rent your car out while you are not using it. Our solution would create an easy to use and convenient way to do short term rentals on personal vehicles. The concept would be similar to Airbnb but for vehicles. We hope that we can make it easier for some people to make some money by loaning out their car and make it possible for people to save money on rentals.
 
 ## Setup
